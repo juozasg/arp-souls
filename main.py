@@ -1,9 +1,9 @@
 import sys
 import pygame
 from pygame.locals import *
-from mobs import Enemy, Player
+from game.mobs import Enemy, Player
 from constants import *
-from text import draw_text, init_text
+from ui.text import draw_text, init_text
 
 Clock = pygame.time.Clock
 
@@ -49,7 +49,7 @@ def main():
         if ms == 0:
             ms = 1
         fps = 1000 / ms
-        draw_text(dsurf, f"FPS: {fps:.2f}", BLACK, 10, 10)
+        draw_text(dsurf, f"ms: {ms:.2f}", BLACK, 10, 10)
 
         pygame.display.flip()
 
