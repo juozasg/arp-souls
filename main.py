@@ -19,11 +19,13 @@ def center_window(window):
     window.set_location(left, top)
 
 def main():
-    window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls")
+    window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls", update_rate=1.0/200)
+    # window.set_vsync(True)
     game = GameView()
     window.show_view(game)
     center_window(window)
 
+    arcade.enable_timings()
     arcade.run()
 
 

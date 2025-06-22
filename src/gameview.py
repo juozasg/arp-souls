@@ -1,6 +1,7 @@
 import arcade
 
 from constants import TILE_SCALING
+from ui.fps import draw_fps
 
 class GameView(arcade.View):
     def __init__(self):
@@ -28,19 +29,23 @@ class GameView(arcade.View):
 
         self.background_color = arcade.csscolor.CORNFLOWER_BLUE
 
+        # self.background_color = arcade.color.WHITE
 
 
-        self.background_color = arcade.color.WHITE
-
-    def setup(self):
-        pass
-
+    def on_update(self, delta_time):
+        # return super().on_update(delta_time)
+        self.dt = delta_time
+        self.logic_fps = 1 / delta_time if delta_time > 0 else 99999
 
     def on_draw(self):
         self.clear()
         # Code to draw other things will go here
         arcade.draw_sprite(self.player_sprite)
         self.wall_list.draw()
+
+
+        # draw_text = f"FPS: {self.fps:.2f} | Delta Time: {self.dt:.4f}"
+        # draw_fps(self.logic_fps, self.dt)
 
         # arcade.start_render()
         # arcade.draw_text("Hello Arp Souls", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
