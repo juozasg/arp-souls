@@ -4,11 +4,14 @@ import pyglet
 import arcade
 
 from constants import WINDOW_HEIGHT, WINDOW_WIDTH
-from gameview import GameView
+# from gameview import GameView
+from introview import IntroView
 
 asset_dir = os.path.join(Path(__file__).parent.resolve(), "assets")
 arcade.resources.add_resource_handle("assets", asset_dir)
 
+arcade.resources.load_liberation_fonts()
+arcade.resources.load_kenney_fonts()
 
 
 
@@ -21,7 +24,7 @@ def center_window(window):
 def main():
     window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls", update_rate=1.0/200)
     # window.set_vsync(True)
-    game = GameView()
+    game = IntroView()
     window.show_view(game)
     center_window(window)
 

@@ -43,6 +43,8 @@ class GameView(arcade.View):
         arcade.draw_sprite(self.player_sprite)
         self.wall_list.draw()
 
+        arcade.draw_text("Hello Arp Souls Default", 500, 800, arcade.color.BLACK, font_size=50)
+
 
         # draw_text = f"FPS: {self.fps:.2f} | Delta Time: {self.dt:.4f}"
         # draw_fps(self.logic_fps, self.dt)
