@@ -1,58 +1,34 @@
-import sys
-import pygame
-from pygame.locals import *
-from game.mobs import Enemy, Player
-from constants import *
-from ui.text import draw_text, init_text
+import pyglet
+import arcade
 
-Clock = pygame.time.Clock
+from constants import WINDOW_HEIGHT, WINDOW_WIDTH
 
 
-def quit_game():
-    pygame.quit()
-    sys.exit()
+class GameView(arcade.Window):
+    def __init__(self):
+        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls")
+        self.background_color = arcade.color.WHITE
 
-def handle_events():
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            quit_game()
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                quit_game()
-            if event.key == K_SPACE:
-                print("Space key pressed")
+    def setup(self):
+        pass
+
+    def center_on_screen(self):
+        viewport = pyglet.display.get_display().get_default_screen()
+        left = (viewport.width - WINDOW_WIDTH) // 4
+        top = (viewport.height - WINDOW_HEIGHT) // 4
+        self.set_location(left, top)
+
+    def on_draw(self):
+        self.clear()
+        # arcade.start_render()
+        # arcade.draw_text("Hello Arp Souls", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+        #                  arcade.color.BLACK, font_size=24, anchor_x="center")
 
 def main():
-    pygame.init()
-    init_text()
-
-    dsurf = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption('Hello Arp Souls')
-
-    dsurf.fill(WHITE)
-
-
-    P1 = Player()
-    E1 = Enemy()
-
-    # running = True
-    while True:
-        handle_events()
-        P1.update()
-        E1.move()
-
-        dsurf.fill(WHITE)
-        P1.draw(dsurf)
-        E1.draw(dsurf)
-
-        ms = Clock().tick_busy_loop(60)
-        if ms == 0:
-            ms = 1
-        fps = 1000 / ms
-        draw_text(dsurf, f"ms: {ms:.2f}", BLACK, 10, 10)
-
-        pygame.display.flip()
-
+    window = GameView()
+    window.setup()
+    window.center_on_screen()
+    arcade.run()
 
 
 if __name__ == '__main__':
