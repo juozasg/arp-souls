@@ -3,3 +3,5 @@
 dump/
 export
 .DS_Store
+__pycache__/
+

@@ -2,4 +2,3 @@
 
 MIDI game for learning arpeggios on the piano.
 
-Written with HaxeFlixel
