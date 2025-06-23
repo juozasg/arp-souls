@@ -18,6 +18,8 @@ class IntroView(arcade.View):
             self.nomidi = True
             return
 
+
+
         # Prepend index to each item in the input_ports list
         portnames = [f"{i+1}: {port}" for i, port in enumerate(self.input_ports)]
         dd = arcade.gui.UIDropdown(height=80, width=400, default=portnames[0] if portnames[0] else "No MIDI Inputs",
@@ -43,6 +45,16 @@ class IntroView(arcade.View):
         # def on_button_click(event):
             # self.on_midi_ready()
 
+    def on_update(self, delta_time: float) -> bool | None:
+        default_port_name = 'KeyLab mkII 61'
+        # find the default port index by substring match
+        default_port_index = next((i for i, port in enumerate(self.input_ports) if default_port_name in port), -1)
+
+        if default_port_index != -1:
+            # If the default port is found, open it immediately
+            print(f"Default MIDI Input found: {self.input_ports[default_port_index]}")
+            self.open_midi_input(default_port_index)
+            return
 
     def on_draw(self):
         self.clear()

@@ -10,3 +10,5 @@ WINDOW_WIDTH = 1920
 WINDOW_HEIGHT = 1080
 
 TILE_SCALING = 0.5
+
+BLACK_KEYS = [1, 3, 6, 8, 10]  # Black keys in an octave
