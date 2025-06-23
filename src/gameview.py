@@ -1,11 +1,15 @@
 import arcade
+import mido
 
 from constants import TILE_SCALING
 from ui.fps import draw_fps
 
 class GameView(arcade.View):
-    def __init__(self):
+    def __init__(self, midi_input_port: mido.ports.BaseInput):
         super().__init__()
+        self.midi_in = midi_input_port
+
+          # Clear any existing messages in the input buffer
 
         self.player_texture = arcade.load_texture(":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png")
         self.player_sprite = arcade.Sprite(self.player_texture)
@@ -24,7 +28,7 @@ class GameView(arcade.View):
             # Add a crate on the ground
             wall = arcade.Sprite(
                 ":resources:images/tiles/boxCrate_double.png", scale=TILE_SCALING)
-            wall.position = coordinate
+            wall.position = coordinate # type: ignore
             self.wall_list.append(wall)
 
         self.background_color = arcade.csscolor.CORNFLOWER_BLUE
@@ -37,6 +41,10 @@ class GameView(arcade.View):
         self.dt = delta_time
         self.logic_fps = 1 / delta_time if delta_time > 0 else 99999
 
+        # Process MIDI messages
+        for msg in self.midi_in.iter_pending():
+            print(f"MIDI: {msg}")
+
     def on_draw(self):
         self.clear()
         # Code to draw other things will go here
@@ -47,7 +55,7 @@ class GameView(arcade.View):
 
 
         # draw_text = f"FPS: {self.fps:.2f} | Delta Time: {self.dt:.4f}"
-        # draw_fps(self.logic_fps, self.dt)
+        draw_fps(self.logic_fps, self.dt)
 
         # arcade.start_render()
         # arcade.draw_text("Hello Arp Souls", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,

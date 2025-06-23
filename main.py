@@ -11,22 +11,28 @@ asset_dir = os.path.join(Path(__file__).parent.resolve(), "assets")
 arcade.resources.add_resource_handle("assets", asset_dir)
 
 arcade.resources.load_liberation_fonts()
-arcade.resources.load_kenney_fonts()
+# arcade.resources.load_kenney_fonts()
 
+class GameWindow(arcade.Window):
+    def __init__(self):
+        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls", update_rate=1.0/200)
 
+    def on_key_press(self, symbol, modifiers):
+        if symbol == arcade.key.ESCAPE:
+            self.close()
 
-def center_window(window):
-    viewport = pyglet.display.get_display().get_default_screen()
-    left = (viewport.width - WINDOW_WIDTH) // 4
-    top = (viewport.height - WINDOW_HEIGHT) // 4
-    window.set_location(left, top)
+    def center_on_screen(self):
+        viewport = pyglet.display.get_display().get_default_screen()
+        left = (viewport.width - WINDOW_WIDTH) // 4
+        top = (viewport.height - WINDOW_HEIGHT) // 4
+        self.set_location(left, top)
 
 def main():
-    window = arcade.Window(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls", update_rate=1.0/200)
+    window = GameWindow()
     # window.set_vsync(True)
     game = IntroView()
     window.show_view(game)
-    center_window(window)
+    window.center_on_screen()
 
     arcade.enable_timings()
     arcade.run()

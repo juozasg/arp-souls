@@ -1,3 +1,4 @@
+
 # Predefined some colors
 BLUE  = (0, 0, 255)
 RED   = (255, 0, 0)
