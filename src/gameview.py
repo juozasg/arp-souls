@@ -23,6 +23,10 @@ class GameView(arcade.View):
         self.beattime: float | None = None
         # self.background_color = arcade.color.WHITE
 
+        self.text_hello = arcade.Text("Hello Arp Souls", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
+        self.text_bpm = arcade.Text(f"", 50, 200, arcade.color.BLACK, font_size=20, anchor_x="left")
+        self.text_err = arcade.Text(f"", 50, 150, arcade.color.BLACK, font_size=20, anchor_x="left")
+
 
     def on_update(self, delta_time):
         # return super().on_update(delta_time)
@@ -50,19 +54,27 @@ class GameView(arcade.View):
 
         self.piano_octave.draw()
 
-        arcade.draw_text("Hello Arp Souls", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
 
+        self.text_hello.draw()
 
         if self.bpm.bpm is not None:
-            arcade.draw_text(f"BPM: {self.bpm.bpm: .1f}", 50, 200, arcade.color.BLACK, font_size=20, anchor_x="left")
+            # arcade.draw_text(f"BPM: {self.bpm.bpm: .1f}", 50, 200, arcade.color.BLACK, font_size=20, anchor_x="left")
+            self.text_bpm.text = f"BPM: {self.bpm.bpm: .1f}"
         if self.bpm.error is not None:
             error = self.bpm.error * 100
-            arcade.draw_text(f"Err: {error: .1f}", 50, 150, arcade.color.BLACK, font_size=20, anchor_x="left")
+            self.text_err.text = f"Err: {error: .1f}"
+
 
         if self.bpm.bpm is None:
-            arcade.draw_text("BPM: ???", 50, 200, arcade.color.BLACK, font_size=20, anchor_x="left")
-            # arcade.draw_text("Err: N/A", 50, 150, arcade.color.BLACK, font_size=20, anchor_x="left")
+            self.text_bpm.text = "BPM: ???"
 
+
+        # arcade.
+        # self.bpm.
+
+        # arcade.
+        self.text_bpm.draw()
+        self.text_err.draw()
         # draw_text = f"FPS: {self.fps:.2f} | Delta Time: {self.dt:.4f}"
         draw_fps(self.logic_fps, self.dt)
 
