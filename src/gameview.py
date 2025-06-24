@@ -4,6 +4,7 @@ import arcade
 import mido
 
 from game.bpm import BPM
+from game.knight import Knight
 from midi_message import MidiMessage
 from ui.fps import draw_fps
 from ui.rect_piano_octave import RectPianoOctave
@@ -15,6 +16,12 @@ class GameView(arcade.View):
         self.bpm = BPM()
         self.midi_in = midi_input_port
 
+        # Create and position the knight
+        self.knight = Knight()
+        self.knight.center_x = 400  # Set x position
+        self.knight.center_y = 300  # Set y position
+        self.knight.set_animation("idle")
+
         self.background_color = arcade.csscolor.CORNFLOWER_BLUE
 
         self.piano_octave = RectPianoOctave(rect_width=80, x=380, y=500)
@@ -23,9 +30,12 @@ class GameView(arcade.View):
         self.logic_fps = 0.0
         # self.background_color = arcade.color.WHITE
 
-        self.text_hello = arcade.Text("Hello Arp Souls", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
-        self.text_bpm = arcade.Text(f"", 50, 200, arcade.color.BLACK, font_size=20, anchor_x="left")
-        self.text_err = arcade.Text(f"", 50, 150, arcade.color.BLACK, font_size=20, anchor_x="left")
+        self.text_hello = arcade.Text("Arp Knight", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
+        self.text_bpm = arcade.Text(f"", 5, 70, arcade.color.BLACK, font_size=20, anchor_x="left")
+        self.text_err = arcade.Text(f"", 5, 40, arcade.color.BLACK, font_size=20, anchor_x="left")
+
+
+
 
 
     def on_update(self, delta_time):
@@ -33,7 +43,10 @@ class GameView(arcade.View):
         self.dt = delta_time
         self.logic_fps = 1 / delta_time if delta_time > 0 else 99999
 
+        current_bpm = self.bpm.bpm
         self.bpm.tick(delta_time)
+        self.knight.on_update(delta_time)
+
 
         # Process MIDI messages
         for msg in self.midi_in.iter_pending():
@@ -46,10 +59,19 @@ class GameView(arcade.View):
             elif msg.type == "note_off":
                 self.piano_octave.key_off(msg.note)
 
+        new_bpm = self.bpm.bpm
+
+        if current_bpm is None and new_bpm is not None:
+            self.knight.set_animation("run")
+        elif current_bpm is not None and new_bpm is None:
+            self.knight.set_animation("idle")
+
     def on_draw(self):
         self.clear()
 
         self.piano_octave.draw()
+
+        self.knight.draw()
 
         self.text_hello.draw()
 

@@ -13,8 +13,15 @@ class BPM:
         if self.beat_dt is not None:
             self.beat_dt += delta_time
 
+        # too slow, lost the beat
+        if self.beat_dt is not None and self.beat_dt > 1.0:
+            self.beat_dt = None
+            self.bpm = None
+            self.error = None
+            self.beat_dts.clear()
+
     def key_on(self, key: int):
-        key = key % 12
+        # key = key % 12
 
         if self.beat_dt is None:
             self.beat_dt = 0.0
@@ -52,4 +59,4 @@ class BPM:
     def draw_debug(self):
         beat_dts_str = ", ".join(f"{dt:.3f}" for dt in self.beat_dts)
 
-        arcade.draw_text(f"Beats: {beat_dts_str}", 50, 50, arcade.color.BLACK, font_size=20, anchor_x="left")
+        arcade.draw_text(f"Beats: {beat_dts_str}", 5, 5, arcade.color.DARK_BLUE_GRAY, font_size=12, anchor_x="left", anchor_y="bottom")

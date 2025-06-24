@@ -40,7 +40,30 @@ class IntroView(arcade.View):
             child=dd,
         )
 
+
+
+        self.instructions_text = arcade.gui.UITextArea(
+            text="""HOW TO PLAY:
+            
+Play red arpeggio notes to turn them yellow
+Play yellow notes together as a chord to make them green and temporarily unlock the next chord
+Start playing the next chord arpeggio to jump to the higher level
+Steady rhythm restores HP. Faster tempo scores more points.
+Game ends when you run out of HP.""",
+            width=900,
+            height=300,
+            font_size=16,
+            # font_name="Arial",
+            text_color=arcade.color.WHITE,
+            background_color=arcade.color.BLACK,
+        )
+        self.anchor.add(self.instructions_text)
+
     def on_update(self, delta_time: float) -> bool | None:
+        self.select_default_midi()
+        # pass
+
+    def select_default_midi(self):
         default_port_name = 'KeyLab mkII 61'
         # find the default port index by substring match
         default_port_index = next((i for i, port in enumerate(self.input_ports) if default_port_name in port), -1)
@@ -63,6 +86,7 @@ class IntroView(arcade.View):
                          arcade.color.WHITE, font_size=30, anchor_x="center")
         # arcade.draw_text("(Click to DEBUG)", self.window.width / 2, self.window.height / 2-75,
         #                  arcade.color.WHITE, font_size=20, anchor_x="center")
+
 
         self.ui.draw()
 

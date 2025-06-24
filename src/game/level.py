@@ -1,0 +1,1 @@
+SPIKES = ":resources:/images/tiles/spikes.png"

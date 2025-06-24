@@ -15,7 +15,7 @@ arcade.resources.load_liberation_fonts()
 
 class GameWindow(arcade.Window):
     def __init__(self):
-        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello Arp Souls", update_rate=1.0/500)
+        super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, "Arp Knight", update_rate=1.0/500)
 
     def on_key_press(self, symbol, modifiers):
         if symbol == arcade.key.ESCAPE:
