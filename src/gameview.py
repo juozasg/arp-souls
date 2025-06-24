@@ -12,6 +12,7 @@ from ui.rect_piano_octave import RectPianoOctave
 class GameView(arcade.View):
     def __init__(self, midi_input_port: mido.ports.BaseInput):
         super().__init__()
+        self.bpm = BPM()
         self.midi_in = midi_input_port
 
         self.background_color = arcade.csscolor.CORNFLOWER_BLUE
@@ -20,8 +21,6 @@ class GameView(arcade.View):
 
         self.dt = 0.0
         self.logic_fps = 0.0
-        self.bpm = BPM()
-        self.beatdt: float | None = None
         # self.background_color = arcade.color.WHITE
 
         self.text_hello = arcade.Text("Hello Arp Souls", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
@@ -34,19 +33,16 @@ class GameView(arcade.View):
         self.dt = delta_time
         self.logic_fps = 1 / delta_time if delta_time > 0 else 99999
 
-        if self.beatdt is not None:
-            self.beatdt += delta_time
+        self.bpm.tick(delta_time)
+
         # Process MIDI messages
         for msg in self.midi_in.iter_pending():
             msg = cast(MidiMessage, msg)
             # print(f"MIDI: {msg.type} Note: {msg.note}")
             if msg.type == "note_on":
                 self.piano_octave.key_on(msg.note)
-                if self.beatdt is None:
-                    self.beatdt = 0.0
-                else:
-                    self.bpm.update_beat(self.beatdt)
-                    self.beatdt = 0.0  # Reset for next beat
+                self.bpm.key_on(msg.note)
+
             elif msg.type == "note_off":
                 self.piano_octave.key_off(msg.note)
 
@@ -55,19 +51,20 @@ class GameView(arcade.View):
 
         self.piano_octave.draw()
 
-
         self.text_hello.draw()
+
+        self.bpm.draw_debug()
 
         if self.bpm.bpm is not None:
             # arcade.draw_text(f"BPM: {self.bpm.bpm: .1f}", 50, 200, arcade.color.BLACK, font_size=20, anchor_x="left")
-            self.text_bpm.text = f"BPM: {self.bpm.bpm: .1f}"
+            self.text_bpm.text = f"Tempo: {self.bpm.bpm: .1f}"
         if self.bpm.error is not None:
             error = self.bpm.error * 100
             self.text_err.text = f"Err: {error: .1f}"
 
 
         if self.bpm.bpm is None:
-            self.text_bpm.text = "BPM: ???"
+            self.text_bpm.text = "Tempo: ???"
 
 
         # arcade.
