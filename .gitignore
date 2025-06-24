@@ -7,3 +7,4 @@ __pycache__/
 main.build
 main.dist
 main.exe
+assets/piano.sf2

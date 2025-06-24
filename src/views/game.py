@@ -7,6 +7,7 @@ from game.bpm import BPM
 from game.knight import Knight
 from game.level import Level
 from midi_message import MidiMessage
+from piano_sampler import PianoSampler
 from ui.fps import draw_fps
 from ui.rect_piano_octave import RectPianoOctave
 
@@ -14,10 +15,12 @@ from ui.rect_piano_octave import RectPianoOctave
 class GameView(arcade.View):
     def __init__(self, midi_input_port: mido.ports.BaseInput):
         super().__init__()
-        self.bpm = BPM()
         self.midi_in = midi_input_port
 
+        self.bpm = BPM()
         self.level = Level()
+
+        # self.piano_sampler = PianoSampler()
 
         # Create and position the knight
         self.knight = Knight()
@@ -55,12 +58,15 @@ class GameView(arcade.View):
             # print(f"MIDI: {msg.type} Note: {msg.note}")
             if msg.type == "note_on":
                 self.piano_octave.key_on(msg.note)
+                PianoSampler.note_on(msg.note, msg.velocity)
                 new_beat = self.bpm.key_on(msg.note)
                 if new_beat and self.knight.current_animation != 'attack':
                     self.knight.oneshot_animation('attack')
+                    # self.piano_sampler.play_sound()
 
             elif msg.type == "note_off":
                 self.piano_octave.key_off(msg.note)
+                PianoSampler.note_off(msg.note)
 
         new_bpm = self.bpm.bpm
 

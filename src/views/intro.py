@@ -3,8 +3,8 @@ from typing import Any, cast
 import mido
 import arcade
 import arcade.gui
+from views.game import GameView
 
-from gameview import GameView
 
 class IntroView(arcade.View):
     def __init__(self):
