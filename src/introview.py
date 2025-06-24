@@ -76,7 +76,7 @@ class IntroView(arcade.View):
         self.ui.disable()
 
     def on_key_press(self, symbol: int, modifiers: int):
-        if symbol >= arcade.key.KEY_1 and symbol <= arcade.key.KEY_9:
+        if arcade.key.KEY_1 <= symbol <= arcade.key.KEY_9:
             # If a number key is pressed, use it to select the MIDI input
             index = symbol - arcade.key.KEY_1
             if 0 <= index < len(self.input_ports):
@@ -89,7 +89,7 @@ class IntroView(arcade.View):
         print(f"Selected MIDI Input: {selected_port}")
                 # Here you would typically open the MIDI port and set up the game
         midi_in = mido.open_input(selected_port) # type: ignore
-        if(midi_in):
+        if midi_in:
             print(f"Opened MIDI Input: {selected_port}")
             self.on_midi_ready(midi_in)
         else:
