@@ -1,5 +1,5 @@
 import arcade
-
+from typing import Literal
 
 class BPM:
     def __init__(self):
@@ -19,19 +19,19 @@ class BPM:
             self.error = None
             self.beat_dts.clear()
 
-    def key_on(self, key: int) -> bool:
+    def key_on(self, key: int) -> Literal['first_beat', 'new_beat', 'chord_beat']:
         """ @return True if a beat was detected, False otherwise (not the first note of a chord)"""
         # key = key % 12
 
         if self.beat_dt is None:
             self.beat_dt = 0.0
-            return True
+            return 'first_beat'
         elif self.beat_dt > 0.12:  # about 400 BPM max to count chords as one hit
             self.update_beat()
             self.beat_dt = 0.0  # Reset for next beat
-            return True
+            return 'new_beat'
 
-        return False
+        return 'chord_beat'
 
     def update_beat(self):
         dt = self.beat_dt
@@ -43,7 +43,7 @@ class BPM:
 
         if len(self.beat_dts) > 5:
             self.beat_dts.pop(0)
-        if len(self.beat_dts) < 2:
+        if (len(self.beat_dts) < 2 and self.bpm is not None) or len(self.beat_dts) < 1:
             self.bpm = None
             self.error = None
             return

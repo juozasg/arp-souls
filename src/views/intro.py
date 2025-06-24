@@ -3,7 +3,7 @@ from typing import Any, cast
 import mido
 import arcade
 import arcade.gui
-from views.game import GameView
+from views.game_main import GameMain
 
 
 class IntroView(arcade.View):
@@ -45,8 +45,8 @@ class IntroView(arcade.View):
         self.instructions_text = arcade.gui.UITextArea(
             text="""HOW TO PLAY:
             
-Play red arpeggio notes to turn them yellow
-Play yellow notes together as a chord to make them green and temporarily unlock the next chord
+Play green arpeggio notes to turn them yellow
+Play yellow notes together as a chord to make them red and temporarily unlock the next chord
 Start playing the next chord arpeggio to jump to the higher level
 Steady rhythm restores HP. Faster tempo scores more points.
 Game ends when you run out of HP.""",
@@ -123,5 +123,5 @@ Game ends when you run out of HP.""",
     def on_midi_ready(self, midi_in: mido.ports.BaseInput):
         print("MIDI is ready!")
         # midi_in = mido.open_input
-        game = GameView(midi_in)
+        game = GameMain(midi_in)
         self.window.show_view(game)

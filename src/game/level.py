@@ -19,10 +19,13 @@ class Level:
     def on_update(self, delta_time: float):
         for p in self.platforms:
             p.center_x -= self.scroll_speed * delta_time
-            # wrap around
-            if p.center_x < -p.width:
-                rightmost = max(plat.center_x for plat in self.platforms)
-                p.center_x = rightmost + p.width
+        self.platforms.sort(key=lambda x: x.center_x)
+        leftmost = self.platforms[0]
+
+        # wrap around
+        if leftmost.center_x < -leftmost.width:
+            rightmost = max(plat.center_x for plat in self.platforms)
+            leftmost.center_x = rightmost + leftmost.width
 
     def draw(self):
         self.platforms.draw()
