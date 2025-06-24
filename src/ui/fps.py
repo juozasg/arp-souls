@@ -1,6 +1,6 @@
 import arcade
 
-def draw_fps(logicfps, dt):
+def draw_fps(logic_fps, dt):
     arcade.draw_text(
-        f"Logic FPS: {logicfps:.2f} | Delta Time: {dt:.4f} | Render FPS: {arcade.get_fps():.2f}",
+        f"Logic FPS: {logic_fps:.2f} | Delta Time: {dt:.4f} | Render FPS: {arcade.get_fps():.2f}",
         10, 10, arcade.color.BLACK, font_size=20)

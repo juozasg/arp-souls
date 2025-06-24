@@ -1,12 +1,13 @@
 from typing import cast
+
 import arcade
 import mido
 
-from constants import TILE_SCALING
 from game.bpm import BPM
 from midi_message import MidiMessage
 from ui.fps import draw_fps
 from ui.rect_piano_octave import RectPianoOctave
+
 
 class GameView(arcade.View):
     def __init__(self, midi_input_port: mido.ports.BaseInput):
@@ -20,7 +21,7 @@ class GameView(arcade.View):
         self.dt = 0.0
         self.logic_fps = 0.0
         self.bpm = BPM()
-        self.beattime: float | None = None
+        self.beatdt: float | None = None
         # self.background_color = arcade.color.WHITE
 
         self.text_hello = arcade.Text("Hello Arp Souls", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
@@ -33,19 +34,19 @@ class GameView(arcade.View):
         self.dt = delta_time
         self.logic_fps = 1 / delta_time if delta_time > 0 else 99999
 
-        if self.beattime is not None:
-            self.beattime += delta_time
+        if self.beatdt is not None:
+            self.beatdt += delta_time
         # Process MIDI messages
         for msg in self.midi_in.iter_pending():
             msg = cast(MidiMessage, msg)
             # print(f"MIDI: {msg.type} Note: {msg.note}")
             if msg.type == "note_on":
                 self.piano_octave.key_on(msg.note)
-                if self.beattime is None:
-                    self.beattime = 0.0
+                if self.beatdt is None:
+                    self.beatdt = 0.0
                 else:
-                    self.bpm.update_beat(self.beattime)
-                    self.beattime = 0.0  # Reset for next beat
+                    self.bpm.update_beat(self.beatdt)
+                    self.beatdt = 0.0  # Reset for next beat
             elif msg.type == "note_off":
                 self.piano_octave.key_off(msg.note)
 
@@ -72,6 +73,7 @@ class GameView(arcade.View):
         # arcade.
         # self.bpm.
 
+        # arcade.
         # arcade.
         self.text_bpm.draw()
         self.text_err.draw()

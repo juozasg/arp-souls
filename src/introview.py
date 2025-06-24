@@ -11,19 +11,19 @@ class IntroView(arcade.View):
         super().__init__()
         self.ui = arcade.gui.UIManager()
 
-        self.nomidi = False  # Flag to indicate if no MIDI inputs are found
+        self.no_midi = False  # Flag to indicate if no MIDI inputs are found
 
         self.input_ports: Any = mido.get_input_names()  # type: ignore
         if not self.input_ports or len(self.input_ports) == 0:
-            self.nomidi = True
+            self.no_midi = True
             return
 
 
 
         # Prepend index to each item in the input_ports list
-        portnames = [f"{i+1}: {port}" for i, port in enumerate(self.input_ports)]
-        dd = arcade.gui.UIDropdown(height=80, width=400, default=portnames[0] if portnames[0] else "No MIDI Inputs",
-                                   options=cast(Any, portnames))
+        port_names = [f"{i + 1}: {port}" for i, port in enumerate(self.input_ports)]
+        dd = arcade.gui.UIDropdown(height=80, width=400, default=port_names[0] if port_names[0] else "No MIDI Inputs",
+                                   options=cast(Any, port_names))
 
         @dd.event()
         def on_change(event: arcade.gui.UIOnChangeEvent):
@@ -40,11 +40,6 @@ class IntroView(arcade.View):
             child=dd,
         )
 
-        # button = arcade.gui.UIFlatButton(text="Skip", width=250)
-        # @button.event("on_click")
-        # def on_button_click(event):
-            # self.on_midi_ready()
-
     def on_update(self, delta_time: float) -> bool | None:
         default_port_name = 'KeyLab mkII 61'
         # find the default port index by substring match
@@ -58,7 +53,7 @@ class IntroView(arcade.View):
 
     def on_draw(self):
         self.clear()
-        if self.nomidi:
+        if self.no_midi:
             arcade.draw_text("No MIDI Inputs Found", self.window.width / 2, self.window.height / 2,
                              arcade.color.WHITE, font_size=50, anchor_x="center")
             return
@@ -98,7 +93,7 @@ class IntroView(arcade.View):
             print(f"Opened MIDI Input: {selected_port}")
             self.on_midi_ready(midi_in)
         else:
-            self.nomidi = True
+            self.no_midi = True
 
 
     def on_midi_ready(self, midi_in: mido.ports.BaseInput):
