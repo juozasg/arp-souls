@@ -1,3 +1,5 @@
+#  $env:PYTHONPATH="./src"
+
 python -m nuitka 'main.py' --follow-imports --include-data-dir='C:\Users\juozas\Code\arp-souls\assets'='.\assets' --include-package=arcade.gl.backends.opengl --include-package=mido.backends.rtmidi --standalone
 
 # onefile
