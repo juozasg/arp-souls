@@ -16,8 +16,6 @@ class Knight(arcade.Sprite):
         # part of the attack combo
         self.animations['attack'] = arcade.load_spritesheet(':assets:knight/attack/spritesheet_attack_2x.png').get_texture_grid((FRAME_WIDTH, FRAME_HEIGHT), 7, 14)
         self.animations['attack'] = self.animations['attack'][1:4]
-        # select range from attack list
-        
 
         self.current_animation = 'idle'
         self.previous_animation = None

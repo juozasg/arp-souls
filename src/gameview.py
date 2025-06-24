@@ -5,6 +5,7 @@ import mido
 
 from game.bpm import BPM
 from game.knight import Knight
+from game.level import Level
 from midi_message import MidiMessage
 from ui.fps import draw_fps
 from ui.rect_piano_octave import RectPianoOctave
@@ -16,11 +17,14 @@ class GameView(arcade.View):
         self.bpm = BPM()
         self.midi_in = midi_input_port
 
+        self.level = Level()
+
         # Create and position the knight
         self.knight = Knight()
-        self.knight.center_x = 400  # Set x position
+        self.knight.center_x = 200  # Set x position
         self.knight.center_y = 300  # Set y position
         self.knight.start_animation("idle")
+
 
         self.background_color = arcade.csscolor.CORNFLOWER_BLUE
 
@@ -43,6 +47,7 @@ class GameView(arcade.View):
         current_bpm = self.bpm.bpm
         self.bpm.tick(delta_time)
         self.knight.on_update(delta_time)
+        self.level.on_update(delta_time)
 
         # Process MIDI messages
         for msg in self.midi_in.iter_pending():
@@ -65,15 +70,20 @@ class GameView(arcade.View):
             self.knight.start_animation("idle")
 
         # keep running if it gets out of sync
-        if new_bpm is not None and self.knight.current_animation != "attack":
+        if new_bpm is not None and (self.knight.current_animation != "attack" and self.knight.current_animation != "jump"):
             self.knight.current_animation = "run"
+
+        if new_bpm is not None:
+            self.level.scroll_speed = new_bpm * 2
+        else:
+            self.level.scroll_speed = 0
 
     def on_draw(self):
         self.clear()
 
-        self.piano_octave.draw()
-
+        self.level.draw()
         self.knight.draw()
+        self.piano_octave.draw()
 
         self.text_hello.draw()
 
