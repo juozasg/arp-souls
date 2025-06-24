@@ -20,7 +20,7 @@ class GameView(arcade.View):
         self.knight = Knight()
         self.knight.center_x = 400  # Set x position
         self.knight.center_y = 300  # Set y position
-        self.knight.set_animation("idle")
+        self.knight.start_animation("idle")
 
         self.background_color = arcade.csscolor.CORNFLOWER_BLUE
 
@@ -30,13 +30,10 @@ class GameView(arcade.View):
         self.logic_fps = 0.0
         # self.background_color = arcade.color.WHITE
 
-        self.text_hello = arcade.Text("Arp Knight", self.window.center_x, 1000, arcade.color.BLACK, font_size=50, anchor_x="center")
+        self.text_hello = arcade.Text("Arp Knight", self.window.center_x, 1000, arcade.color.BLACK, font_size=50,
+                                      anchor_x="center")
         self.text_bpm = arcade.Text(f"", 5, 70, arcade.color.BLACK, font_size=20, anchor_x="left")
         self.text_err = arcade.Text(f"", 5, 40, arcade.color.BLACK, font_size=20, anchor_x="left")
-
-
-
-
 
     def on_update(self, delta_time):
         # return super().on_update(delta_time)
@@ -47,14 +44,15 @@ class GameView(arcade.View):
         self.bpm.tick(delta_time)
         self.knight.on_update(delta_time)
 
-
         # Process MIDI messages
         for msg in self.midi_in.iter_pending():
             msg = cast(MidiMessage, msg)
             # print(f"MIDI: {msg.type} Note: {msg.note}")
             if msg.type == "note_on":
                 self.piano_octave.key_on(msg.note)
-                self.bpm.key_on(msg.note)
+                new_beat = self.bpm.key_on(msg.note)
+                if new_beat and self.knight.current_animation != 'attack':
+                    self.knight.oneshot_animation('attack')
 
             elif msg.type == "note_off":
                 self.piano_octave.key_off(msg.note)
@@ -62,9 +60,13 @@ class GameView(arcade.View):
         new_bpm = self.bpm.bpm
 
         if current_bpm is None and new_bpm is not None:
-            self.knight.set_animation("run")
+            self.knight.start_animation("run")
         elif current_bpm is not None and new_bpm is None:
-            self.knight.set_animation("idle")
+            self.knight.start_animation("idle")
+
+        # keep running if it gets out of sync
+        if new_bpm is not None and self.knight.current_animation != "attack":
+            self.knight.current_animation = "run"
 
     def on_draw(self):
         self.clear()
@@ -84,10 +86,8 @@ class GameView(arcade.View):
             error = self.bpm.error * 100
             self.text_err.text = f"Err: {error: .1f}"
 
-
         if self.bpm.bpm is None:
             self.text_bpm.text = "Tempo: ???"
-
 
         # arcade.
         # self.bpm.
