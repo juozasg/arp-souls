@@ -15,6 +15,8 @@ from ui.rect_piano_octave import RectPianoOctave
 class GameMain(arcade.View):
     def __init__(self, midi_input_port: mido.ports.BaseInput):
         super().__init__()
+        arcade.resources.load_kenney_fonts()
+
         self.midi_in = midi_input_port
 
         self.bpm = BPM()
@@ -29,7 +31,7 @@ class GameMain(arcade.View):
         self.knight.is_running = False
 
 
-        self.background_color = arcade.csscolor.CORNFLOWER_BLUE
+        self.background_color = arcade.csscolor.DARK_SLATE_GRAY
 
         self.piano_octave = RectPianoOctave(rect_width=80, x=380, y=500)
 
@@ -68,7 +70,7 @@ class GameMain(arcade.View):
                 PianoSampler.note_on(msg.note, msg.velocity)
                 beat_status = self.bpm.key_on(msg.note)
                 print(f"Beat status: {beat_status}")
-                if beat_status in ['first_beat', 'new_beat']:
+                if beat_status == 'first_beat' or type(beat_status) == float:
                     self.knight.oneshot_animation('attack')
                 elif beat_status == 'chord_beat':
                     self.knight.oneshot_animation('attack2')

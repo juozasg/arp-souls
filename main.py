@@ -4,7 +4,7 @@ import pyglet
 import arcade
 
 from constants import WINDOW_HEIGHT, WINDOW_WIDTH
-# from gameview import GameView
+
 from views.intro import IntroView
 from piano_sampler import load_soundfound
 
@@ -14,7 +14,6 @@ arcade.resources.add_resource_handle("assets", asset_dir)
 arcade.resources.load_liberation_fonts()
 
 load_soundfound()
-# arcade.resources.load_kenney_fonts()
 
 class GameWindow(arcade.Window):
     def __init__(self):
