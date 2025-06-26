@@ -7,6 +7,7 @@ from game.bpm import BPM
 from game.knight import Knight
 from game.level import Level
 from midi_message import MidiMessage
+from note_names import midi_code_to_name
 from piano_sampler import PianoSampler
 from ui.fps import draw_fps
 from ui.rect_piano_octave import RectPianoOctave
@@ -72,6 +73,7 @@ class GameMain(arcade.View):
                 print(f"Beat status: {beat_status}")
                 if beat_status == 'first_beat' or type(beat_status) == float:
                     self.knight.oneshot_animation('attack')
+                    self.level.note_hit(midi_code_to_name(msg.note))
                 elif beat_status == 'chord_beat':
                     self.knight.oneshot_animation('attack2')
                     # self.piano_sampler.play_sound()

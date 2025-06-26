@@ -26,9 +26,26 @@ class Level:
         self.notes.append(note1)
 
         note2 = Note('G')
-        note2.center_x = 500
-        note2.center_y = 320
+        note2.center_x = 300
+        note2.center_y = 380
         self.notes.append(note2)
+
+    def notes_in_hit_zone(self):
+        # find all the notes around x = 300
+        notes_in_hit_zone = []
+        for note in self.notes:
+            if 290 < note.center_x < 310:
+                notes_in_hit_zone.append(note)
+        return notes_in_hit_zone
+
+
+    def note_hit(self, note_name: str):
+        hit_notes = self.notes_in_hit_zone()
+        for note in hit_notes:
+            if note.letter == note_name:
+                note.was_hit()
+                return True
+        return False
 
     def on_update(self, delta_time: float):
         self.move_platforms(delta_time)
