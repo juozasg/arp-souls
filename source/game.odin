@@ -13,7 +13,7 @@ texture2_rot: f32
 init :: proc() {
 	run = true
 	rl.SetConfigFlags({.WINDOW_RESIZABLE, .VSYNC_HINT})
-	rl.InitWindow(1280, 720, "Odin + Raylib on the web")
+	rl.InitWindow(1280, 720, "AAARP")
 	rl.GuiSetStyle(rl.GuiControl.DEFAULT, i32(rl.GuiDefaultProperty.TEXT_SIZE), 30)
 
 
@@ -75,6 +75,16 @@ update :: proc() {
 parent_window_size_changed :: proc(w, h: int) {
 	rl.SetWindowSize(c.int(w), c.int(h))
 }
+
+
+midi_note_on :: proc(note, vel: int) {
+	log.debug("NOTE:", note, vel)
+}
+
+midi_note_off :: proc(note, vel: int) {
+	log.debug("NOTE OFF:", note, vel)
+}
+
 
 shutdown :: proc() {
 	rl.CloseWindow()

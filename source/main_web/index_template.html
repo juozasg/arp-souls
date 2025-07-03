@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>Odin + Raylib on the web</title>
-	<meta name="title" content="Odin + Raylib on the web">
-	<meta name="description" content="Make games using Odin + Raylib that work in the browser">
+	<title>AAAAARP</title>
+	<meta name="title" content="AAAARP">
+	<meta name="description" content="OAAARP">
 	<meta name="viewport" content="width=device-width">
 
 	<style>
@@ -43,6 +43,8 @@
 		odinMemoryInterface.setIntSize(4);
 		var odinImports = odin.setupDefaultImports(odinMemoryInterface);
 
+		let midi = null; // global MIDIAccess objects
+
 		// The Module is used as configuration for emscripten.
 		var Module = {
 			// This is called by emscripten when it starts up.
@@ -62,6 +64,46 @@
 			// This happens a bit after `instantiateWasm`, when everything is
 			// done setting up. At that point we can run code.
 			onRuntimeInitialized: () => {
+
+
+
+				function onMIDISuccess(midiAccess) {
+					console.log("MIDI ready!");
+					midi = midiAccess; // store in the global (in real usage, would probably keep in an object instance)
+
+					if (!midi.inputs) {
+						alert('No MIDI inputs found. Please connect a MIDI device');
+						return;
+					}
+
+					midi.inputs.forEach((input) => {
+						console.log(input.name); /* inherited property from MIDIPort */
+						input.onmidimessage = (message) => {
+							if(message.data[0] === 144) { // Note On
+								console.log(`Note On: ${message.data[1]} Velocity: ${message.data[2]}`);
+								// Call a function in the wasm module to handle the note on event
+								wasmExports.web_midi_note_on(message.data[1], message.data[2]);
+							} else if(message.data[0] === 128) { // Note Off
+								console.log(`Note Off: ${message.data[1]} Velocity: ${message.data[2]}`);
+								// Call a function in the wasm module to handle the note off event
+								wasmExports.web_midi_note_off(message.data[1], message.data[2]);
+							}
+							// console.log(message.data);
+						};
+					});
+				}
+
+				function onMIDIFailure(msg) {
+					console.error(`Failed to get MIDI access - ${msg}`);
+				}
+
+				if (!navigator.requestMIDIAccess) {
+					alert('This browser does not support the Web MIDI API. Please use a different browser (Chrome or Firefox).');
+					return;
+				}
+
+				navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+				// console.log("MIDI!!!!");
 				var e = wasmExports;
 
 				// Calls any procedure marked with @init
@@ -94,7 +136,7 @@
 						e._end();
 						return;
 					}
-					window.requestAnimationFrame(do_main_update);
+					setTimeout(() => window.requestAnimationFrame(do_main_update), 500);
 				}
 
 				window.requestAnimationFrame(do_main_update);

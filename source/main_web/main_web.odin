@@ -49,3 +49,15 @@ web_window_size_changed :: proc "c" (w: c.int, h: c.int) {
 	context = web_context
 	game.parent_window_size_changed(int(w), int(h))
 }
+
+@export
+web_midi_note_on :: proc "c" (note: c.int, vel: c.int) {
+	context = web_context
+	game.midi_note_on(int(note), int(vel))
+}
+
+@export
+web_midi_note_off :: proc "c" (note: c.int, vel: c.int) {
+	context = web_context
+	game.midi_note_off(int(note), int(vel))
+}
