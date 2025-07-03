@@ -1,3 +1,2 @@
-.haxelib/
-.haxelsp/recording/
-dump/
+*.sublime-workspace
+build/
