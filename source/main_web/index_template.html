@@ -79,11 +79,11 @@
 					midi.inputs.forEach((input) => {
 						console.log(input.name); /* inherited property from MIDIPort */
 						input.onmidimessage = (message) => {
-							if(message.data[0] === 144) { // Note On
+							if (message.data[0] === 144) { // Note On
 								console.log(`Note On: ${message.data[1]} Velocity: ${message.data[2]}`);
 								// Call a function in the wasm module to handle the note on event
 								wasmExports.web_midi_note_on(message.data[1], message.data[2]);
-							} else if(message.data[0] === 128) { // Note Off
+							} else if (message.data[0] === 128) { // Note Off
 								console.log(`Note Off: ${message.data[1]} Velocity: ${message.data[2]}`);
 								// Call a function in the wasm module to handle the note off event
 								wasmExports.web_midi_note_off(message.data[1], message.data[2]);
@@ -103,7 +103,6 @@
 				}
 
 				navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-				// console.log("MIDI!!!!");
 				var e = wasmExports;
 
 				// Calls any procedure marked with @init
@@ -136,7 +135,8 @@
 						e._end();
 						return;
 					}
-					setTimeout(() => window.requestAnimationFrame(do_main_update), 500);
+					// setTimeout(() => window.requestAnimationFrame(do_main_update), 500);
+					window.requestAnimationFrame(do_main_update)
 				}
 
 				window.requestAnimationFrame(do_main_update);

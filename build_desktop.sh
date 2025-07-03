@@ -1,6 +1,7 @@
 #!/bin/bash -eu
 
 OUT_DIR="build/desktop"
+rm -rf $OUT_DIR
 mkdir -p $OUT_DIR
 odin build source/main_desktop -out:$OUT_DIR/game_desktop.bin
 cp -R ./assets/ ./$OUT_DIR/assets/
