@@ -1,25 +1,20 @@
 extends Node2D
 
-@export var sound: VASynthConfiguration
-var note_contexts = {}
-var synth
+var note_stream_players: Dictionary[int, AudioStreamPlayer] = {}
+var fading_stream_players: Array[AudioStreamPlayer] = []
 
 func _ready():
 	OS.open_midi_inputs()
-	# Create a synth player
-	
-	synth = AudioSynthPlayer.new()
-	synth.configuration = sound
-	add_child(synth)
-	
-	# Play a note
-	var context = synth.get_context()
-	context.note_on(60, 0.8)  # MIDI note 60 (C4) with velocity 0.8
-	
-	# Stop the note after 1 second
-	await get_tree().create_timer(1.0).timeout
-	context.note_off(context.absolute_time)
-	
+	var from = 12
+	var to = 96
+	for n in range(from, to+1):
+		var player = AudioStreamPlayer.new()
+		var note_name = MIDIUtils.midi_note_int_to_string(n)
+		player.stream = AudioStreamOggVorbis.load_from_file("res://grand-piano/%s.ogg" % note_name)
+		note_stream_players[n] = player
+		self.add_child(player)
+		
+
 
 func _input(input_event):
 	if not (input_event is InputEventMIDI):
@@ -28,26 +23,25 @@ func _input(input_event):
 	var midi_event: InputEventMIDI = input_event
 	var note = midi_event.pitch
 	if midi_event.message == MIDI_MESSAGE_NOTE_ON:
-		note_contexts[note] = synth.get_context()
-		note_contexts[note].note_on(note, midi_event.velocity)
-	else:
-		note_contexts[note].note_off(0)
+		var player = note_stream_players[note]
+		player.play()
+		#print(midi_event.velocity)
+		player.volume_linear = min(0.1 + (0.9 * (midi_event.velocity / 110.0)), 1.0)
+		#print(player.volume_linear)
+		if fading_stream_players.has(player):
+			fading_stream_players.erase(player)
+		#print(MIDIUtils.midi_note_int_to_string(note))
+	elif midi_event.message == MIDI_MESSAGE_NOTE_OFF:
+		var player = note_stream_players[note]
+		if !fading_stream_players.has(player):
+			fading_stream_players.append(player)
+		#player.volume_linear = 0.5
+		#player.stop()
 
-	#add_child(synth)
-#
-#func initialize_synth() -> void:
-	#synth = AudioSynthPlayer.new()
-	#synth.configuration = sound
-	#add_child(synth)
-#
-#func _ready() -> void:
-	#initialize_synth()
-	#
-	#$PlayButton.pressed.connect(play_note)
-#
-#
-#func play_note():
-	#var context = synth.get_context()
-	#context.note_on(62, 100)  # Start a note
-	#context.note_off(1)           	# Release a note
-	#context = null                   # Release the context object from memory
+func _process(delta: float) -> void:
+	#print(delta)
+	for p in fading_stream_players:
+		p.volume_linear -= (delta * 6)
+		if p.volume_linear < 0.1:
+			p.stop()
+			fading_stream_players.erase(p)

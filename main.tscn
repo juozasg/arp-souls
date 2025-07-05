@@ -1,46 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=2 format=3 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 
-[sub_resource type="ADSR" id="ADSR_ig7tw"]
-decay = 0.03001
-sustain_level = 0.5
-release = 0.05001
-
-[sub_resource type="ModulatedParameter" id="ModulatedParameter_0xm2m"]
-mod_amount = 1.0
-source = SubResource("ADSR_ig7tw")
-mod_type = 2
-
-[sub_resource type="ModulatedParameter" id="ModulatedParameter_h2yge"]
-base_value = 0.5
-
-[sub_resource type="ModulatedParameter" id="ModulatedParameter_1bvp3"]
-mod_min = -24.0
-mod_max = 24.0
-
-[sub_resource type="ModulatedParameter" id="ModulatedParameter_lquwl"]
-base_value = 0.5
-
-[sub_resource type="VASynthConfiguration" id="VASynthConfiguration_7mycd"]
-waveform_modulation = SubResource("ModulatedParameter_h2yge")
-amplitude_modulation = SubResource("ModulatedParameter_0xm2m")
-pitch_modulation = SubResource("ModulatedParameter_1bvp3")
-pulse_width_modulation = SubResource("ModulatedParameter_lquwl")
-parameters = {
-"amplitude": SubResource("ModulatedParameter_0xm2m"),
-"pitch": SubResource("ModulatedParameter_1bvp3"),
-"pulse_width": SubResource("ModulatedParameter_lquwl"),
-"waveform": SubResource("ModulatedParameter_h2yge")
-}
-
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
-sound = SubResource("VASynthConfiguration_7mycd")
-
-[node name="PlayButton" type="Button" parent="."]
-offset_left = 36.0
-offset_top = 58.0
-offset_right = 412.0
-offset_bottom = 199.0
-text = "PLAY"
