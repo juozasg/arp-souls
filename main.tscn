@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=4 format=3 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d27yhrjonqcao" path="res://util/web_platform.gd" id="2_0xm2m"]
+[ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://theme/soft_retro/soft_retro.tres" id="3_h2yge"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
@@ -9,3 +10,65 @@ script = ExtResource("1_ig7tw")
 [node name="WebPlatform" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_0xm2m")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 104.0
+grow_horizontal = 2
+theme = ExtResource("3_h2yge")
+color = Color(0, 0, 0.41568628, 1)
+
+[node name="Label Mana" type="Label" parent="UI/Background"]
+layout_mode = 1
+offset_left = 29.0
+offset_top = 15.0
+offset_right = 78.0
+offset_bottom = 38.0
+text = "MANA"
+
+[node name="Label Corner" type="Label" parent="UI/Background"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 341.0
+offset_right = 52.0
+offset_bottom = 364.0
+text = "Corner"
+
+[node name="Label Corner2" type="Label" parent="UI/Background"]
+layout_mode = 0
+offset_left = 587.0
+offset_top = 337.0
+offset_right = 637.0
+offset_bottom = 360.0
+text = "Corner"
+
+[node name="ClickStartAudioUI" type="ColorRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EnableAudioGesture" type="Button" parent="UI/ClickStartAudioUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.5
+offset_top = -95.0
+offset_right = 267.5
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_h2yge")
+theme_override_font_sizes/font_size = 39
+text = "CLICK TO START"
+
+[connection signal="pressed" from="UI/ClickStartAudioUI/EnableAudioGesture" to="WebPlatform" method="_on_enable_audio_gesture_pressed"]
