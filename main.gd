@@ -5,6 +5,7 @@ var fading_stream_players: Array[AudioStreamPlayer] = []
 
 func _ready():
 	OS.open_midi_inputs()
+	print("MIDI OPEN", OS.get_connected_midi_inputs())
 	var from = 12
 	var to = 96
 	for n in range(from, to+1):
@@ -13,25 +14,31 @@ func _ready():
 		player.stream = AudioStreamOggVorbis.load_from_file("res://grand-piano/%s.ogg" % note_name)
 		note_stream_players[n] = player
 		self.add_child(player)
-		
+
 
 
 func _input(input_event):
+	if input_event.is_action_pressed('ui_cancel') and not %WebPlatform.is_web():
+		get_tree().quit()
+	
+
 	if not (input_event is InputEventMIDI):
 		return
 
 	var midi_event: InputEventMIDI = input_event
 	var note = midi_event.pitch
+	var note_name = MIDIUtils.midi_note_int_to_string(note)
 	if midi_event.message == MIDI_MESSAGE_NOTE_ON:
 		var player = note_stream_players[note]
 		player.play()
-		#print(midi_event.velocity)
-		player.volume_linear = min(0.1 + (0.9 * (midi_event.velocity / 110.0)), 1.0)
+		print('ON ', note_name)
+		player.volume_linear = clamp(0.1 + (0.9 * (midi_event.velocity / 110.0)), 0.0, 1.0)
 		#print(player.volume_linear)
 		if fading_stream_players.has(player):
 			fading_stream_players.erase(player)
 		#print(MIDIUtils.midi_note_int_to_string(note))
 	elif midi_event.message == MIDI_MESSAGE_NOTE_OFF:
+		print('      OFF ', note_name)
 		var player = note_stream_players[note]
 		if !fading_stream_players.has(player):
 			fading_stream_players.append(player)
@@ -41,7 +48,7 @@ func _input(input_event):
 func _process(delta: float) -> void:
 	#print(delta)
 	for p in fading_stream_players:
-		p.volume_linear -= (delta * 6)
+		p.volume_linear = clamp(p.volume_linear - (delta * 6), 0.0, 1.0)
 		if p.volume_linear < 0.1:
 			p.stop()
 			fading_stream_players.erase(p)
