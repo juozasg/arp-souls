@@ -2,6 +2,7 @@ extends Node
 
 const res_x = 640
 const res_y = 360
+
 func _ready() -> void:
 	print("AUTOLOAD")
 	print(DisplayServer.screen_get_size())

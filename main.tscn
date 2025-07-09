@@ -1,8 +1,10 @@
-[gd_scene load_steps=59 format=4 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=61 format=4 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d27yhrjonqcao" path="res://util/web_platform.gd" id="2_0xm2m"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://theme/soft_retro/soft_retro.tres" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://d3j4kdxjwu3ie" path="res://midi_logic.gd" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://l8gocrhsm53e" path="res://piano_player.gd" id="5_7mycd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 bg_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
@@ -4921,6 +4923,7 @@ cache/0/16/1/glyphs/402653239/texture_idx = 0
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
 metadata/_edit_horizontal_guides_ = [69.0, 38.0, 23.0]
+metadata/_edit_vertical_guides_ = [314.0]
 
 [node name="WebPlatform" type="Node" parent="."]
 unique_name_in_owner = true
@@ -5071,9 +5074,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.12087912
-anchor_top = 0.27586207
+anchor_top = 0.13771054
 anchor_right = 0.45604396
-anchor_bottom = 0.06896555
+anchor_bottom = 0.13771054
 offset_left = 77.0
 offset_right = 169.0
 offset_bottom = 21.0
@@ -5087,9 +5090,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.01
-anchor_top = -0.54664534
+anchor_top = -0.53515106
 anchor_right = 0.01
-anchor_bottom = -0.45362204
+anchor_bottom = -0.4421278
 offset_left = 189.0
 offset_top = 64.0
 offset_right = 416.0
@@ -5120,9 +5123,9 @@ metadata/_edit_use_anchors_ = true
 [node name="HEALTH2" type="ProgressBar" parent="UI/HUDPanel/Label Stamina"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.08118321
-anchor_top = 1.137931
-anchor_right = 0.08999385
+anchor_left = 0.07677793
+anchor_top = 0.9655174
+anchor_right = 0.08558857
 anchor_bottom = 0.9655174
 offset_left = 81.57143
 offset_top = -28.0
@@ -5139,9 +5142,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.016666668
-anchor_top = -0.11627907
+anchor_top = -0.104784824
 anchor_right = -0.016666668
-anchor_bottom = -0.058139537
+anchor_bottom = -0.046645284
 offset_left = 28.0
 offset_top = 26.0
 offset_right = 129.0
@@ -5223,10 +5226,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_4c57u")
 [node name="Label Mana" type="Label" parent="UI/HUDPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.8016667
-anchor_top = 0.5632184
+anchor_left = 0.79833335
+anchor_top = 0.59770113
 anchor_right = 0.79833335
-anchor_bottom = 0.5632184
+anchor_bottom = 0.59770113
 offset_right = 141.0
 offset_bottom = 21.0
 theme_override_colors/font_color = Color(1.0958179, 1.0958179, 1.0958179, 1)
@@ -5236,8 +5239,8 @@ metadata/_edit_use_anchors_ = true
 [node name="MANA" type="Label" parent="UI/HUDPanel/Label Mana"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.036277495
-anchor_top = -0.047619004
+anchor_left = -0.114291735
+anchor_top = -0.04761905
 anchor_right = -0.114291735
 anchor_bottom = -0.04761905
 offset_left = 59.0
@@ -5251,9 +5254,9 @@ metadata/_edit_use_anchors_ = true
 [node name="Label Souls" type="Label" parent="UI/HUDPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.8016667
+anchor_left = 0.8
 anchor_top = 0.2413793
-anchor_right = 0.8016667
+anchor_right = 0.8
 anchor_bottom = 0.2413793
 offset_right = 131.0
 offset_bottom = 21.0
@@ -5307,7 +5310,7 @@ offset_right = 82.0
 offset_bottom = -79.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1bvp3")
 
-[node name="Label" type="Label" parent="UI"]
+[node name="Howto1" type="Label" parent="UI"]
 offset_left = 113.0
 offset_top = 311.0
 offset_right = 557.0
@@ -5319,7 +5322,7 @@ theme_override_fonts/font = SubResource("FontFile_dg77c")
 theme_override_font_sizes/font_size = 16
 text = "Switching chords gains SOULS. Faster mistakes hurt more"
 
-[node name="Label2" type="Label" parent="UI"]
+[node name="Howto2" type="Label" parent="UI"]
 offset_left = 111.0
 offset_top = 284.0
 offset_right = 555.0
@@ -5330,5 +5333,19 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = SubResource("FontFile_dg77c")
 theme_override_font_sizes/font_size = 16
 text = "Steady  arpeggio RHYTM restores STAMINA and HEALTH"
+
+[node name="DebugLabel" type="Label" parent="UI"]
+offset_left = 25.0
+offset_top = 92.0
+offset_right = 621.0
+offset_bottom = 115.0
+theme_override_font_sizes/font_size = 11
+
+[node name="MidiLogic" type="Node" parent="."]
+script = ExtResource("4_lquwl")
+
+[node name="PianoPlayer" type="Node" parent="MidiLogic"]
+unique_name_in_owner = true
+script = ExtResource("5_7mycd")
 
 [connection signal="pressed" from="UI/ClickStartAudioUI/EnableAudioGesture" to="WebPlatform" method="_on_enable_audio_gesture_pressed"]
