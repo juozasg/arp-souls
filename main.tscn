@@ -5189,7 +5189,8 @@ theme_override_font_sizes/font_size = 23
 text = "RHYTHM"
 metadata/_edit_use_anchors_ = true
 
-[node name="BPM" type="Label" parent="UI/HUDPanel/Rhythm"]
+[node name="RHYTHM" type="Label" parent="UI/HUDPanel/Rhythm"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.290495
@@ -5335,6 +5336,7 @@ theme_override_font_sizes/font_size = 16
 text = "Steady  arpeggio RHYTM restores STAMINA and HEALTH"
 
 [node name="DebugLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
 offset_left = 25.0
 offset_top = 92.0
 offset_right = 621.0
