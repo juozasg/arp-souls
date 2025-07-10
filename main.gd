@@ -9,11 +9,5 @@ var fading_stream_players: Array[AudioStreamPlayer] = []
 func _input(e):
 	if e.is_action_pressed('ui_cancel') and not %WebPlatform.is_web():
 		get_tree().quit()
-	#
-
-	#if input_event
-
-
-#func _process(delta: float) -> void:
-	#pass
-	#
+	if e is InputEventKey and e.pressed and e.keycode == KEY_D:
+		%DebugLabel.visible = !%DebugLabel.visible

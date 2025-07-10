@@ -13,6 +13,8 @@ func _ready() -> void:
 		%ClickStartAudioUI.hide()
 	else:
 		%ClickStartAudioUI.show()
+		%Howto.hide()
+		%DebugLabel.hide()
 	
 func _input(e: InputEvent):
 	#print("web input ", e)
@@ -22,3 +24,4 @@ func _input(e: InputEvent):
 	
 func _on_enable_audio_gesture_pressed() -> void:
 	%ClickStartAudioUI.hide()
+	%Howto.show()

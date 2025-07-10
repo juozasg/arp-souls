@@ -1,5 +1,8 @@
 extends Node
 
+var config = ConfigFile.new()
+
+
 var ticks: Array[float] = []
 var dticks: Array[float] = []
 var tick0 = Time.get_ticks_msec()
@@ -13,17 +16,26 @@ var mana = 0.0
 var souls = 0.0
 var error_mult = 0.0
 
-const valid_notes = ['C4', 'G4', 'C5']
-var last_note = ''
+var valid_notes = []
+var last_notes = []
+
 
 func _ready():
 	OS.open_midi_inputs()
 	print("MIDI OPEN", OS.get_connected_midi_inputs())
 	print('tick0 ', tick0)
+	
+	for i in range(0, 8):
+		valid_notes.append("C%d" % i)
+		valid_notes.append("G%d" % i)
+	print(valid_notes)
+	var err = config.load("user://scores.cfg")
+	if err == OK:
+		mana = config.get_value("Score", "mana", 0)
+		souls = config.get_value("Score", "souls", 0)
+		print("loaded scores")
 
-	#var tick0 = O)f
-#
-#
+
 func _input(e):
 	if not (e is InputEventMIDI):
 		return
@@ -35,26 +47,52 @@ func _input(e):
 	if midi.message == MIDI_MESSAGE_NOTE_ON:
 		tempo_input()
 		var note_name = MIDIUtils.midi_note_int_to_string(midi.pitch)
-		if note_name in valid_notes and note_name != last_note:
+		if note_name in valid_notes and note_name not in last_notes:
 			good_note()
 		else:
 			bad_note()
-		last_note = note_name
+		# REAL LOGIC FOR CHORDS AND UI
+		last_notes.push_front(note_name)
+		if last_notes.size() > 1:
+			last_notes.pop_back()
 		
+var is_dead = false
 
 func good_note():
-	mana = mana + stamina_mult
+	if not is_dead:
+		mana = mana + stamina_mult
+		score_updated()
 	#print('good note')
 	
 
 func bad_note():
 	var damage = bpm / 5
 	if bpm > 100:
-		damage += (bpm - 100) / 2
-	print("DAMAGE = ", damage)
+		damage += (bpm - 100) / 1.5
+	#print("DAMAGE = ", damage)
 	stamina = clamp(stamina - damage, 0.0, 100)
 	health = clamp(health - damage, 0.0, 100)
-	print("bad note")
+	if health == 0.0:
+		died()
+	#print("bad note")
+
+func score_updated():
+	config.set_value("Score", "mana", mana)
+	config.set_value("Score", "souls", souls)
+	config.save("user://scores.cfg")
+	#print("saved scores")
+
+func died():
+	if not is_dead:
+		var lost_mana = mana * 0.2
+		mana = mana - lost_mana
+		score_updated()
+		if lost_mana > 1.0:
+			%LOSTMANA.text = "-%d MANA" % lost_mana
+		else:
+			%LOSTMANA.text = "NO MANA LOST"
+		is_dead = true
+	
 	
 
 func _process(dt: float):
@@ -65,27 +103,52 @@ func _process(dt: float):
 		idle_dt = 0.0
 	if error_score >= 7.0:
 		error_mult = (1 + (error_score - 7.0)) ** 1.5 # winning from 1 to 8
+		if bpm > 100:
+			var bpm_bump = clamp((bpm - 100) / 15, 0, 8)
+			error_mult += bpm_bump
+			
 	else:
 		error_mult = (error_score - 8.0) / 2
 	#error_mult = ((error_score - 7.0)) / 5.0
 	stamina += (20 * dt * error_mult)
 	stamina = clamp(stamina, 0.0, 100.0)
 	
+	
+	var extra_max_stamina_mult = 0
+	if(bpm > 100):
+		extra_max_stamina_mult = (bpm - 100) / 10.0
 	if stamina >= 99.5:
 		stamina_mult += (0.2 * dt * error_mult)
-		stamina_mult = clamp(stamina_mult, 1.0, 15)
+		stamina_mult = clamp(stamina_mult, 1.0, 15 + extra_max_stamina_mult)
 		health = clamp(health + (15 * dt), 0, 100.0)
+		is_dead = false
 	else:
 		stamina_mult = 1.0
 	
+	if(stamina_mult > 15.0):
+		%STAMINA_MULT.set("theme_override_colors/font_color", Color.from_rgba8(255, 89, 89, 255))
+	else:
+		%STAMINA_MULT.set("theme_override_colors/font_color", Color.from_rgba8(58, 187, 62, 255))
+
+	if error_score < 7.0:
+		%LabelStamina.set("theme_override_colors/font_color", Color.from_hsv(0, 0, 1, 0.4))
+	else:
+		%LabelStamina.set("theme_override_colors/font_color", Color.from_hsv(0, 0, 1, 1.0))
+		
+
 	%STAMINA.value = stamina
 	%STAMINA_MULT.text = "%.1fx" % stamina_mult
 	
 	%HEALTH.value = health
 	%MANA.text = "%d" % mana
 	%SOULS.text = "%d" % souls
+	if is_dead:
+		%DEAD.show()
+	else:
+		%DEAD.hide()
 		
-		
+	#%DebugLabel.text = "error_mult=%f" % [error_mult]
+
 
 func tempo_input():
 	var tick = Time.get_ticks_msec() - tick0
@@ -101,8 +164,10 @@ func tempo_input():
 	calc_tempo()
 
 func calc_tempo():
-	if ticks.size() > 7:
-		ticks = ticks.slice(1, 8)
+	var window_size = 7
+
+	if ticks.size() > window_size:
+		ticks = ticks.slice(1, window_size + 1)
 	dticks.clear()
 	for i in range(0, ticks.size() - 1):
 		dticks.append((ticks[i+1] - ticks[i])/1.0)
@@ -131,18 +196,20 @@ func calc_tempo():
 		else:
 			error_score = (new_error_score * 0.3) + (error_score * 0.7)
 
-		error_score = clamp(error_score, 0.0, 10.0)
+		var window_fullness = ticks.size() / window_size
+		error_score = clamp(error_score, 0.0, 7.0 + (3 * window_fullness))
 
 		bpm = 30_000 / mean
 		
 
-		%DebugLabel.text = "TS: %s\nDTS: %s   BPM: %.1f   dt_changes: %s \n error_mult=%f" % [ticks, dticks, bpm, dt_changes, error_mult]
+		%DebugLabel.text = "TS: %s DTS: %s\ndt_changes: %s \nerror_mult=%f" % [ticks, dticks, dt_changes, error_mult]
 	%RHYTHM.set_score(error_score)
 	%BPM.text = "%d" % bpm
-	if bpm > 100:
-		pass
+	if bpm >= 100:
+		%BPM.set("theme_override_colors/font_color", Color.from_rgba8(255, 89, 89, 255))
 	else:
-		pass
+		%BPM.set("theme_override_colors/font_color", Color.from_rgba8(255,255,255, 255))
+
 
 
 
