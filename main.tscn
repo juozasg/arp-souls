@@ -1,8 +1,9 @@
-[gd_scene load_steps=61 format=4 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=62 format=4 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d27yhrjonqcao" path="res://util/web_platform.gd" id="2_0xm2m"]
 [ext_resource type="Theme" uid="uid://b3klx57slj0l3" path="res://theme/soft_retro/soft_retro.tres" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bj3bastdcrahy" path="res://rhythm.gd" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://d3j4kdxjwu3ie" path="res://midi_logic.gd" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://l8gocrhsm53e" path="res://piano_player.gd" id="5_7mycd"]
 
@@ -5193,20 +5194,21 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.290495
-anchor_top = -1.3448275
-anchor_right = 0.6930693
-anchor_bottom = 0.931138
+anchor_left = 0.33999997
+anchor_top = -0.9008793
+anchor_right = 0.6633663
+anchor_bottom = 0.09602631
 offset_left = 71.66
 offset_right = 99.0
 offset_bottom = 22.997004
-theme_override_colors/font_color = Color(0.17430516, 0.60784316, 0, 1)
+theme_override_colors/font_color = Color(0.60784316, 0, 0.036999516, 1)
 theme_override_colors/font_shadow_color = Color(0.6784314, 0.06666667, 0.5372549, 1)
 theme_override_colors/font_outline_color = Color(1.0958179, 1.0958179, 1.0958179, 1)
 theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 61
-text = "7"
+theme_override_font_sizes/font_size = 41
+text = "X"
 horizontal_alignment = 1
+script = ExtResource("4_7mycd")
 metadata/_edit_use_anchors_ = true
 
 [node name="VSeparator" type="VSeparator" parent="UI/HUDPanel"]

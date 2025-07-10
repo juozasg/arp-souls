@@ -4,6 +4,7 @@ var ticks: Array[float] = []
 var dticks: Array[float] = []
 var tick0 = Time.get_ticks_msec()
 var bpm = 0.0
+var error_score = 0.0
 
 func _ready():
 	OS.open_midi_inputs()
@@ -37,16 +38,18 @@ func calc_tempo():
 			return
 		
 	ticks.append(tick)
-	if ticks.size() > 5:
-		ticks = ticks.slice(1, 6)
+	if ticks.size() > 7:
+		ticks = ticks.slice(1, 8)
 	dticks.clear()
 	for i in range(0, ticks.size() - 1):
 		dticks.append((ticks[i+1] - ticks[i])/1.0)
 	#print('dtick ' , tick)
-	#dticks = [250, 250, 250, 261]
+	#dticks = [250, 250, 250, 255, 250, 250] # 0.01 = perfect score
+	#dticks = [950, 50, 250, 755, 500, 250] # 1.5 = worst ever
 
 	if dticks.size() < 2:
 		%RHYTHM.text = "X"
+		error_score = 0.0
 	else:
 		var mean = dticks.reduce(func(t, sum): return sum + t) / dticks.size()
 		var dt_changes = []
@@ -54,16 +57,27 @@ func calc_tempo():
 			var t = dticks[i]
 			var t1 = dticks[i+1]
 			var scale_down_older = (dticks.size() - 1 - i) / 3.0
+			scale_down_older = 1.0
 			
 			dt_changes.append((absf(t1-t)/t)/scale_down_older)
 		var dt_changes_mean = dt_changes.reduce(func(t, sum): return sum + t) / dt_changes.size()
-		var error_score = clamp(11.0 - (dt_changes_mean * 11.0), 0.0, 10.0)
+		var new_error_score = 10.5 - (dt_changes_mean * 20)
+		if error_score == 0.0:
+			error_score = new_error_score
+		else:
+			error_score = (new_error_score * 0.3) + (error_score * 0.7)
+
+		error_score = clamp(error_score, 0.0, 10.0)
+
 		bpm = 60_000 / mean
-		#bpm = mean
-		#var variance = dticks.reduce(func(t, sum): return (t - mean) ** 2) / (dticks.size())
-		#var stdev = (variance ** 0.5)
-		%RHYTHM.text = "%.1f" % error_score 
+		
+
+			
+		#%RHYTHM.text = "%.5f" % error_score
+
 		%DebugLabel.text = "TS: %s\nDTS: %s   BPM: %.1f   dt_changes: %s " % [ticks, dticks, bpm, dt_changes]
+	%RHYTHM.set_score(error_score)
+
 
 
 #func _physics_process(delta: float) -> void:
