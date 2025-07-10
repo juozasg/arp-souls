@@ -5072,6 +5072,7 @@ text = "HEALTH"
 metadata/_edit_use_anchors_ = true
 
 [node name="HEALTH" type="ProgressBar" parent="UI/HUDPanel/Label Health"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.12087912
@@ -5104,7 +5105,8 @@ theme_override_font_sizes/font_size = 20
 text = "STAMINA"
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="UI/HUDPanel/Label Stamina"]
+[node name="STAMINA_MULT" type="Label" parent="UI/HUDPanel/Label Stamina"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8281938
@@ -5118,10 +5120,11 @@ offset_bottom = 17.0
 theme_override_colors/font_color = Color(0.22745097, 0.73333335, 0.24412927, 1)
 theme_override_colors/font_shadow_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
 theme_override_font_sizes/font_size = 20
-text = "14.9x"
+text = "1x"
 metadata/_edit_use_anchors_ = true
 
-[node name="HEALTH2" type="ProgressBar" parent="UI/HUDPanel/Label Stamina"]
+[node name="STAMINA" type="ProgressBar" parent="UI/HUDPanel/Label Stamina"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07677793
@@ -5135,7 +5138,6 @@ offset_bottom = -7.000002
 theme = ExtResource("3_h2yge")
 theme_override_styles/background = SubResource("StyleBoxFlat_5vw27")
 theme_override_styles/fill = SubResource("StyleBoxFlat_kek77")
-value = 50.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
@@ -5156,7 +5158,8 @@ theme_override_font_sizes/font_size = 20
 text = "SPEED"
 metadata/_edit_use_anchors_ = true
 
-[node name="SPEED" type="Label" parent="UI/HUDPanel/Speed"]
+[node name="BPM" type="Label" parent="UI/HUDPanel/Speed"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.06930693
@@ -5168,7 +5171,7 @@ offset_right = 99.0
 offset_bottom = 23.0
 theme_override_colors/font_shadow_color = Color(0.6784314, 0.06666667, 0.5372549, 1)
 theme_override_font_sizes/font_size = 20
-text = "120"
+text = "0"
 horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
 
@@ -5240,6 +5243,7 @@ text = "MANA"
 metadata/_edit_use_anchors_ = true
 
 [node name="MANA" type="Label" parent="UI/HUDPanel/Label Mana"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.114291735
@@ -5268,6 +5272,7 @@ text = "SOULS"
 metadata/_edit_use_anchors_ = true
 
 [node name="SOULS" type="Label" parent="UI/HUDPanel/Label Souls"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.03816794
@@ -5276,7 +5281,7 @@ offset_left = 58.0
 offset_right = 114.0
 offset_bottom = 23.0
 theme_override_colors/font_color = Color(0.8, 1, 0.9882353, 1)
-text = "5.6"
+text = "0"
 horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
 

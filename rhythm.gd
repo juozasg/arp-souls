@@ -14,7 +14,7 @@ func set_score(score: float):
 		
 	var hue = (int((min_hue + (range_hue * (score / 10.0)))) % 360) / 360.0
 	var color = Color.from_hsv(hue, 1.0, 0.61)
-	print(hue, " ", color)
+	#print(hue, " ", color)
 	set("theme_override_colors/font_color", color)
 
 

@@ -6,9 +6,12 @@ var fading_stream_players: Array[AudioStreamPlayer] = []
 #func _ready():
 	#pass
 
-func _input(input_event):
-	if input_event.is_action_pressed('ui_cancel') and not %WebPlatform.is_web():
+func _input(e):
+	if e.is_action_pressed('ui_cancel') and not %WebPlatform.is_web():
 		get_tree().quit()
+	#
+
+	#if input_event
 
 
 #func _process(delta: float) -> void:
