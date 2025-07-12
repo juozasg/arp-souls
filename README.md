@@ -1,3 +1,3 @@
 # arp-souls
 
-Godot style
+Godot style. Web export first
