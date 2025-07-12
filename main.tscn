@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=4 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=64 format=4 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d27yhrjonqcao" path="res://util/web_platform.gd" id="2_0xm2m"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://bj3bastdcrahy" path="res://rhythm.gd" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://d3j4kdxjwu3ie" path="res://midi_logic.gd" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://l8gocrhsm53e" path="res://piano_player.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://cmrdxx6ncnxap" path="res://tempo.gd" id="7_272bh"]
+[ext_resource type="Script" uid="uid://jj6x3iajtpv7" path="res://score_logic.gd" id="8_5vw27"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 bg_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
@@ -5474,5 +5476,13 @@ script = ExtResource("4_lquwl")
 [node name="PianoPlayer" type="Node" parent="MidiLogic"]
 unique_name_in_owner = true
 script = ExtResource("5_7mycd")
+
+[node name="Tempo" type="Node" parent="MidiLogic"]
+unique_name_in_owner = true
+script = ExtResource("7_272bh")
+
+[node name="ScoreLogic" type="Node" parent="MidiLogic"]
+unique_name_in_owner = true
+script = ExtResource("8_5vw27")
 
 [connection signal="pressed" from="UI/ClickStartAudioUI/EnableAudioGesture" to="WebPlatform" method="_on_enable_audio_gesture_pressed"]
