@@ -23,7 +23,6 @@ func good_note():
 		mana = mana + stamina_mult
 		score_updated()
 	#print('good note')
-	
 
 func bad_note():
 	var damage = %Tempo.bpm / 5
@@ -35,6 +34,11 @@ func bad_note():
 	if health == 0.0:
 		died()
 	#print("bad note")
+
+func chord_change():
+	if not is_dead:
+		souls = souls + stamina_mult
+		score_updated()
 
 func score_updated():
 	config.set_value("Score", "mana", mana)

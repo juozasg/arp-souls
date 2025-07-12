@@ -5046,6 +5046,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_272bh")
 metadata/_edit_group_ = true
 
 [node name="CHORD" type="Label" parent="UI/ChordsPanel/Current Chord Panel"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_h2yge")
 theme_override_colors/font_color = Color(1.0958179, 1.0958179, 1.0958179, 1)
@@ -5087,6 +5088,7 @@ theme_override_font_sizes/font_size = 90
 text = ">"
 
 [node name="CHORD2" type="Label" parent="UI/ChordsPanel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
