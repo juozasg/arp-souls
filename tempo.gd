@@ -9,6 +9,7 @@ var tempo_score = 0.0
 var error_mult = 0.0
 
 
+
 func died():
 	ticks.clear()
 	calc_tempo()

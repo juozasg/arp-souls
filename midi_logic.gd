@@ -1,12 +1,14 @@
 extends Node
 
-var last_note = -1
+var last_note0 = -1
+var last_note1 = -1
 
-var current_chord = 5
-var next_chord = 9
 
 #var chord_pool = [5, 9, 10, 0] # F, A, A#, C
-var chord_pool = [5, 0] # F, C
+var chord_pool = [5, 7] # F, C
+
+var current_chord = 5
+var next_chord = 7
 
 func _ready():
 	OS.open_midi_inputs()
@@ -27,9 +29,11 @@ func _input(e):
 	if midi.message == MIDI_MESSAGE_NOTE_ON:
 		%Tempo.tempo_input()
 		var note = midi.pitch % 12
-		if note == last_note:
+		if note == last_note0 && note == last_note1:
 			%ScoreLogic.bad_note()
+			
 		elif MIDIUtils.valid_note_in_chord(current_chord, note):
+			%Anim.play("flash_chord")
 			%ScoreLogic.good_note()
 		elif MIDIUtils.valid_note_in_chord(current_chord, note) and MIDIUtils.valid_note_in_chord(next_chord, note):
 			# TODO: flash both chords
@@ -42,7 +46,8 @@ func _input(e):
 			%ScoreLogic.bad_note()
 			
 		# REAL LOGIC FOR CHORDS AND UI
-		last_note = note
+		last_note1 = last_note0
+		last_note0 = note
 
 func chord_change():
 	current_chord = next_chord

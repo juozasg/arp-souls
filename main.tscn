@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=4 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=70 format=4 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d27yhrjonqcao" path="res://util/web_platform.gd" id="2_0xm2m"]
@@ -5000,6 +5000,96 @@ cache/0/16/1/glyphs/23/size = Vector2(12, 16)
 cache/0/16/1/glyphs/23/uv_rect = Rect2(155, 70, 12, 16)
 cache/0/16/1/glyphs/23/texture_idx = 0
 
+[sub_resource type="Animation" id="Animation_kek77"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CHORD:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5vw27"]
+resource_name = "flash_chord"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CHORD:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4c57u"]
+resource_name = "flash_chord_red"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChordsPanel/Current Chord Panel/CHORD:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.60784316, 0, 0.03529412, 1), Color(0.60784316, 0, 0.03529412, 1), Color(1.0958179, 1.0958179, 1.0958179, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_efxa6"]
+resource_name = "flash_chord2_red"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChordsPanel/Current Chord Panel/CHORD:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.60784316, 0, 0.03529412, 1), Color(0.60784316, 0, 0.03529412, 1), Color(1.0958179, 1.0958179, 1.0958179, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dg77c"]
+resource_name = "flash_chord2_green"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CHORD:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4c57u"]
+_data = {
+&"RESET": SubResource("Animation_kek77"),
+&"flash_chord2_green": SubResource("Animation_dg77c"),
+&"flash_chord2_red": SubResource("Animation_efxa6"),
+&"flash_chord_green": SubResource("Animation_5vw27"),
+&"flash_chord_red": SubResource("Animation_4c57u")
+}
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
 metadata/_edit_horizontal_guides_ = [69.0, 38.0, 23.0]
@@ -5025,10 +5115,10 @@ anchors_preset = -1
 anchor_top = 0.37800002
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 120.0
-offset_top = -7.0
-offset_right = -120.0
-offset_bottom = -90.91998
+offset_left = 23.0
+offset_top = -25.080002
+offset_right = -217.0
+offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -5327,43 +5417,47 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_4c57u")
 
 [node name="Label Mana" type="Label" parent="UI/HUDPanel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.8
-anchor_top = 0.5862069
-anchor_right = 0.8
-anchor_bottom = 0.5862069
-offset_right = 141.0
-offset_bottom = 21.0
+offset_left = 468.0
+offset_top = 45.0
+offset_right = 609.0
+offset_bottom = 66.0
 theme_override_colors/font_color = Color(1.0958179, 1.0958179, 1.0958179, 1)
+theme_override_colors/font_shadow_color = Color(0.6784314, 0.06666667, 0.5372549, 1)
 text = "MANA"
-metadata/_edit_use_anchors_ = true
 
 [node name="MANA" type="Label" parent="UI/HUDPanel/Label Mana"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.10719954
-anchor_top = -0.04761905
-anchor_right = -0.10719954
-anchor_bottom = -0.04761905
-offset_left = 59.0
-offset_right = 124.0
-offset_bottom = 23.0
+offset_left = 61.0
+offset_top = 2.0
+offset_right = 126.0
+offset_bottom = 25.0
 theme_override_colors/font_color = Color(1.0958179, 1.0958179, 1.0958179, 1)
 text = "0"
 horizontal_alignment = 2
-metadata/_edit_use_anchors_ = true
+
+[node name="MANARATE" type="Label" parent="UI/HUDPanel/Label Mana"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_top = 13.0
+offset_right = 74.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1.0958179, 1.0958179, 1.0958179, 1)
+theme_override_font_sizes/font_size = 22
+text = "50.5/s"
 
 [node name="Label Souls" type="Label" parent="UI/HUDPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.8
-anchor_top = 0.21839081
-anchor_right = 0.8
-anchor_bottom = 0.21839081
+anchor_left = 0.78
+anchor_top = 0.03448276
+anchor_right = 0.78
+anchor_bottom = 0.03448276
 offset_right = 131.0
 offset_bottom = 21.0
 theme_override_colors/font_color = Color(0.8, 1, 0.9882353, 1)
+theme_override_colors/font_shadow_color = Color(0.6784314, 0.06666667, 0.5372549, 1)
+theme_override_font_sizes/font_size = 16
 text = "SOULS"
 metadata/_edit_use_anchors_ = true
 
@@ -5371,18 +5465,36 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.03816794
-anchor_right = -0.03816794
+anchor_left = 0.106870204
+anchor_right = 0.106870204
 offset_left = 58.0
 offset_right = 114.0
 offset_bottom = 23.0
 theme_override_colors/font_color = Color(0.8, 1, 0.9882353, 1)
-text = "0"
+text = "20000"
 horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SOULSRATE" type="Label" parent="UI/HUDPanel/Label Souls"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.4427477
+anchor_top = 0.6666667
+anchor_right = -0.37404543
+anchor_bottom = 1.0476191
+offset_left = 58.0
+offset_right = 114.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.8, 1, 0.9882353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 22
+text = "77.7/s"
 metadata/_edit_use_anchors_ = true
 
 [node name="DEAD" type="Panel" parent="UI/HUDPanel"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 463.0
 offset_top = 1.0
@@ -5441,10 +5553,10 @@ text = "CLICK TO START"
 unique_name_in_owner = true
 
 [node name="Howto1" type="Label" parent="UI/Howto"]
-offset_left = 113.0
-offset_top = 311.0
-offset_right = 557.0
-offset_bottom = 342.0
+offset_left = 16.0
+offset_top = 332.0
+offset_right = 460.0
+offset_bottom = 363.0
 theme = ExtResource("3_h2yge")
 theme_override_colors/font_color = Color(0.8, 1, 0.9882353, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -5453,10 +5565,10 @@ theme_override_font_sizes/font_size = 16
 text = "Switching chords gains SOULS. Faster mistakes hurt more"
 
 [node name="Howto2" type="Label" parent="UI/Howto"]
-offset_left = 111.0
-offset_top = 284.0
-offset_right = 555.0
-offset_bottom = 312.0
+offset_left = 17.0
+offset_top = 306.0
+offset_right = 461.0
+offset_bottom = 334.0
 theme = ExtResource("3_h2yge")
 theme_override_colors/font_color = Color(0.8, 1, 0.9882353, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -5466,12 +5578,21 @@ text = "Steady arpeggio RHYTM restores STAMINA and HEALTH"
 
 [node name="DebugLabel" type="Label" parent="UI"]
 unique_name_in_owner = true
-offset_left = 4.0
+visible = false
+offset_left = 26.0
 offset_top = 88.0
-offset_right = 600.0
-offset_bottom = 111.0
+offset_right = 73.0
+offset_bottom = 108.0
 theme_override_colors/font_color = Color(0.5764706, 1, 1, 1)
 theme_override_font_sizes/font_size = 10
+text = "DEBUG"
+
+[node name="Anim" type="AnimationPlayer" parent="UI"]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_4c57u")
+}
+speed_scale = 1.5
 
 [node name="MidiLogic" type="Node" parent="."]
 script = ExtResource("4_lquwl")
