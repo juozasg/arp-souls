@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://cfj4pbiclmbd"]
+[gd_scene load_steps=73 format=4 uid="uid://cfj4pbiclmbd"]
 
 [ext_resource type="Script" uid="uid://dja8f02qrmyfj" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://d27yhrjonqcao" path="res://util/web_platform.gd" id="2_0xm2m"]
@@ -5014,6 +5014,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1.0958179, 1.0958179, 1.0958179, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%CHORD:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ChordsPanel/Arrow:theme_override_colors/font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.27450982, 0.25882354, 0.36862746, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_5vw27"]
 resource_name = "flash_chord"
@@ -5026,10 +5050,10 @@ tracks/0/path = NodePath("%CHORD:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0.012924582, 0.015847154, 0.095082894, 0.17379533),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1)]
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(1.0958179, 1.0958179, 1.0958179, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_4c57u"]
@@ -5054,14 +5078,14 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ChordsPanel/Current Chord Panel/CHORD:theme_override_colors/font_color")
+tracks/0/path = NodePath("%CHORD2:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396),
+"times": PackedFloat32Array(0.005321883, 0.02573064, 0.15894549, 0.19052127),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.60784316, 0, 0.03529412, 1), Color(0.60784316, 0, 0.03529412, 1), Color(1.0958179, 1.0958179, 1.0958179, 1)]
+"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.60784316, 0, 0.03529412, 1), Color(0.60784316, 0, 0.03529412, 1), Color(0.6784314, 0.06666667, 0.5372549, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_dg77c"]
@@ -5071,24 +5095,95 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%CHORD:theme_override_colors/font_color")
+tracks/0/path = NodePath("%CHORD2:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.012924582, 0.03333334, 0.16654818, 0.19812396, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.020408757, 0.1536236, 0.18519938),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(1.0958179, 1.0958179, 1.0958179, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1)]
+"values": [Color(0.6784314, 0.06666667, 0.5372549, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.0024890304, 0.6393791, 0.046075687, 1), Color(0.6784314, 0.06666667, 0.5372549, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ycdy4"]
+resource_name = "fade_out_chord"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CHORD:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19082753),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_w48qg"]
+resource_name = "flash_arrow"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChordsPanel/Arrow:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0091232285, 0.034972377, 0.26913524, 0.30030626),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.25882354, 0.36862746, 1), Color(0.27450982, 1, 0.36862746, 1), Color(0.27450982, 0.25882354, 0.36862746, 1), Color(0.27450982, 0.25882354, 0.36862746, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ChordsPanel/Arrow2:theme_override_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0091232285, 0.034972377, 0.26913524, 0.30030626),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.25882354, 0.36862746, 1), Color(0.27450982, 1, 0.36862746, 1), Color(0.27450982, 0.25882354, 0.36862746, 1), Color(0.27450982, 0.25882354, 0.36862746, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ChordsPanel/Arrow3:theme_override_colors/font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0091232285, 0.034972377, 0.26913524, 0.30030626),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.27450982, 0.25882354, 0.36862746, 1), Color(0.27450982, 1, 0.36862746, 1), Color(0.27450982, 0.25882354, 0.36862746, 1), Color(0.27450982, 0.25882354, 0.36862746, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4c57u"]
 _data = {
 &"RESET": SubResource("Animation_kek77"),
+&"fade_out_chord": SubResource("Animation_ycdy4"),
+&"flash_arrow": SubResource("Animation_w48qg"),
 &"flash_chord2_green": SubResource("Animation_dg77c"),
 &"flash_chord2_red": SubResource("Animation_efxa6"),
 &"flash_chord_green": SubResource("Animation_5vw27"),
 &"flash_chord_red": SubResource("Animation_4c57u")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg77c"]
+bg_color = Color(0.27451, 0.258824, 0.368627, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.933333, 0.8, 1)
+expand_margin_left = 5.0
+expand_margin_top = 2.0
+expand_margin_right = 5.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
@@ -5118,7 +5213,7 @@ anchor_bottom = 1.0
 offset_left = 23.0
 offset_top = -25.080002
 offset_right = -217.0
-offset_bottom = -70.0
+offset_bottom = -103.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -5129,7 +5224,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lquwl")
 layout_mode = 0
 offset_left = 40.0
 offset_top = 30.0
-offset_right = 133.0
+offset_right = 128.0
 offset_bottom = 110.0
 theme = ExtResource("3_h2yge")
 theme_override_styles/panel = SubResource("StyleBoxFlat_272bh")
@@ -5189,7 +5284,7 @@ offset_right = -60.0
 offset_bottom = 107.0
 grow_horizontal = 0
 theme = ExtResource("3_h2yge")
-theme_override_colors/font_color = Color(1.0961504, 1.0961504, 1.0961504, 0.17254902)
+theme_override_colors/font_color = Color(0.6784314, 0.06666667, 0.5372549, 1)
 theme_override_colors/font_shadow_color = Color(0.6784314, 0.06666667, 0.5372549, 1)
 theme_override_font_sizes/font_size = 60
 text = "G"
@@ -5593,6 +5688,81 @@ libraries = {
 &"": SubResource("AnimationLibrary_4c57u")
 }
 speed_scale = 1.5
+
+[node name="LevelSelector" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("3_h2yge")
+
+[node name="Panel" type="Panel" parent="UI/LevelSelector"]
+layout_mode = 0
+offset_left = 471.0
+offset_top = 112.0
+offset_right = 632.0
+offset_bottom = 341.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelSelector"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 11.9
+anchor_top = 2.825
+anchor_right = 14.65
+anchor_bottom = 5.95
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Level1" type="Button" parent="UI/LevelSelector/VBoxContainer"]
+layout_mode = 2
+text = "Level 1"
+
+[node name="TextEdit" type="TextEdit" parent="UI/LevelSelector/VBoxContainer"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+text = "5000 MANA
+100 SOULS"
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+virtual_keyboard_show_on_focus = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+
+[node name="Level2" type="Button" parent="UI/LevelSelector/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "Level 2"
+
+[node name="Level3" type="Button" parent="UI/LevelSelector/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "Level 3"
+
+[node name="Level4" type="Button" parent="UI/LevelSelector/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "Level 4"
+
+[node name="Level5" type="Button" parent="UI/LevelSelector/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "Level 5"
+
+[node name="Level6" type="Button" parent="UI/LevelSelector/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.16862746, 0.16078432, 0.20784314, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dg77c")
+text = "Level 6"
 
 [node name="MidiLogic" type="Node" parent="."]
 script = ExtResource("4_lquwl")

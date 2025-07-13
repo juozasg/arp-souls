@@ -33,14 +33,19 @@ func _input(e):
 			%ScoreLogic.bad_note()
 			
 		elif MIDIUtils.valid_note_in_chord(current_chord, note):
-			%Anim.play("flash_chord")
+			%Anim.play("flash_chord_green")
 			%ScoreLogic.good_note()
 		elif MIDIUtils.valid_note_in_chord(current_chord, note) and MIDIUtils.valid_note_in_chord(next_chord, note):
 			# TODO: flash both chords
+			%Anim.play("flash_chord_green")
+			%Anim.play("flash_chord2_green")
 			%ScoreLogic.good_note()
 		elif MIDIUtils.valid_note_in_chord(next_chord, note):
 			%ScoreLogic.good_note()
 			%ScoreLogic.chord_change()
+			%Anim.play("flash_chord2_green")
+			%Anim.play("fade_out_chord")
+			%Anim.play("flash_arrow")
 			chord_change()
 		else:
 			%ScoreLogic.bad_note()
