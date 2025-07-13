@@ -5,8 +5,8 @@ var last_note1 = -1
 
 
 #var chord_pool = [5, 9, 10, 0] # F, A, A#, C
-var chord_pool = [5, 7] # F, C
-
+#var chord_pool = [5, 7] # F, G
+var chord_pool = [4, 5, 6, 7] # E, F, F#, G
 var current_chord = 5
 var next_chord = 7
 
@@ -31,7 +31,8 @@ func _input(e):
 		var note = midi.pitch % 12
 		if note == last_note0 && note == last_note1:
 			%ScoreLogic.bad_note()
-			
+			%Anim.play("flash_red")
+			#%NoteHints/Hint1/Label.text
 		elif MIDIUtils.valid_note_in_chord(current_chord, note):
 			%Anim.play("flash_chord_green")
 			%ScoreLogic.good_note()
@@ -49,6 +50,9 @@ func _input(e):
 			chord_change()
 		else:
 			%ScoreLogic.bad_note()
+			%Anim.play("flash_red")
+
+
 			
 		# REAL LOGIC FOR CHORDS AND UI
 		last_note1 = last_note0

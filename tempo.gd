@@ -21,7 +21,7 @@ func _process(dt: float):
 		calc_tempo()
 		idle_dt = 0.0
 	if tempo_score >= 7.0:
-		error_mult = (2 + (tempo_score - 7.0)) / 2.0 # winning from 1 to 2.5
+		error_mult = ((2 + (tempo_score - 7.0)) / 2.0) ** 1.6 # winning from 1 to 4.3
 		if bpm > 100:
 			var bpm_bump = clamp((bpm - 100) / 20, 0, 8)
 			error_mult += bpm_bump
