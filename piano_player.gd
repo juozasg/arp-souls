@@ -8,7 +8,7 @@ func _ready():
 	var to = 96
 	for n in range(from, to+1):
 		var player = AudioStreamPlayer.new()
-		var note_name = MIDIUtils.midi_note_int_to_string(n)
+		var note_name = MIDIUtils.note_name(n)
 		player.stream = AudioStreamOggVorbis.load_from_file("res://grand-piano/%s.ogg" % note_name)
 		note_stream_players[n] = player
 		self.add_child(player)
@@ -20,7 +20,7 @@ func note_event(event: InputEventMIDI):
 	var velocity = event.velocity
 	var message = event.message
 	
-	var note_name = MIDIUtils.midi_note_int_to_string(note)
+	var note_name = MIDIUtils.note_name(note)
 	if message == MIDI_MESSAGE_NOTE_ON:
 		var player = note_stream_players[note]
 		player.play()

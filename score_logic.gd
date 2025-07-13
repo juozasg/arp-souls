@@ -23,6 +23,7 @@ func good_note():
 		mana = mana + stamina_mult
 		score_updated()
 	#print('good note')
+	discrete_update_labels()
 
 func bad_note():
 	var damage = %Tempo.bpm / 5
@@ -34,6 +35,7 @@ func bad_note():
 	if health == 0.0:
 		died()
 	#print("bad note")
+	discrete_update_labels()
 
 func chord_change():
 	if not is_dead:
@@ -56,6 +58,7 @@ func died():
 		else:
 			%LOSTMANA.text = "NO MANA LOST"
 		is_dead = true
+		%Tempo.died()
 	
 func _process(dt: float):
 	#error_mult = ((tempo_score - 7.0)) / 5.0
@@ -73,23 +76,31 @@ func _process(dt: float):
 	else:
 		stamina_mult = 1.0
 	
-	if(stamina_mult > 15.0):
-		%STAMINA_MULT.set("theme_override_colors/font_color", Color.from_rgba8(255, 89, 89, 255))
-	else:
-		%STAMINA_MULT.set("theme_override_colors/font_color", Color.from_rgba8(58, 187, 62, 255))
+	smooth_update_labels()
 
+# updating labels on each note should be more visceral feedback
+func discrete_update_labels():
 	if %Tempo.tempo_score < 7.0:
 		%LabelStamina.set("theme_override_colors/font_color", Color.from_hsv(0, 0, 1, 0.4))
 	else:
 		%LabelStamina.set("theme_override_colors/font_color", Color.from_hsv(0, 0, 1, 1.0))
-		
 
-	%STAMINA.value = stamina
-	%STAMINA_MULT.text = "%.1fx" % stamina_mult
+	if is_dead:
+		%LabelHealth.set("theme_override_colors/font_color", Color.from_hsv(0, 0, 1, 0.4))
+	else:
+		%LabelHealth.set("theme_override_colors/font_color", Color.from_hsv(0, 0, 1, 1.0))		
 	
-	%HEALTH.value = health
+	%STAMINA_MULT.text = "%.1fx" % stamina_mult
+	if(stamina_mult > 15.0):
+		%STAMINA_MULT.set("theme_override_colors/font_color", Color.from_rgba8(255, 89, 89, 255))
+	else:
+		%STAMINA_MULT.set("theme_override_colors/font_color", Color.from_rgba8(58, 187, 62, 255))
 	%MANA.text = "%d" % mana
 	%SOULS.text = "%d" % souls
+	
+func smooth_update_labels():
+	%STAMINA.value = stamina
+	%HEALTH.value = health
 	if is_dead:
 		%DEAD.show()
 	else:

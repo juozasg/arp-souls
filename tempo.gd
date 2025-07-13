@@ -8,6 +8,11 @@ var bpm = 0.0
 var tempo_score = 0.0
 var error_mult = 0.0
 
+
+func died():
+	ticks.clear()
+	calc_tempo()
+
 func _process(dt: float):
 	idle_dt += dt
 	if idle_dt > 1.0:
@@ -15,9 +20,9 @@ func _process(dt: float):
 		calc_tempo()
 		idle_dt = 0.0
 	if tempo_score >= 7.0:
-		error_mult = (1 + (tempo_score - 7.0)) ** 1.5 # winning from 1 to 8
+		error_mult = (2 + (tempo_score - 7.0)) / 2.0 # winning from 1 to 2.5
 		if bpm > 100:
-			var bpm_bump = clamp((bpm - 100) / 15, 0, 8)
+			var bpm_bump = clamp((bpm - 100) / 20, 0, 8)
 			error_mult += bpm_bump
 			
 	else:
@@ -69,7 +74,7 @@ func calc_tempo():
 		else:
 			tempo_score = (new_tempo_score * 0.3) + (tempo_score * 0.7)
 
-		var window_fullness = ticks.size() / window_size
+		var window_fullness = floor(ticks.size()) / window_size
 		tempo_score = clamp(tempo_score, 0.0, 7.0 + (3 * window_fullness))
 
 		bpm = 30_000 / mean

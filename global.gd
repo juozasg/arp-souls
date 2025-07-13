@@ -14,5 +14,5 @@ func _ready() -> void:
 
 	get_window().content_scale_size = Vector2i(res_x, res_y)
 	get_window().size = Vector2i(res_x * scale_factor, res_y * scale_factor)
-	get_window().position = Vector2i(DisplayServer.screen_get_size().x/2, 300 )
+	get_window().position = Vector2i(floor(DisplayServer.screen_get_size().x)/2, 300 )
 	#get_window().type
