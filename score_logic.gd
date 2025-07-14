@@ -97,6 +97,7 @@ func _process(dt: float):
 		is_dead = false
 	else:
 		stamina_mult = 1.0
+		discrete_update_labels()
 	
 	score_rate_dt += dt
 	if score_rate_dt >= 1.0:

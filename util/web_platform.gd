@@ -1,6 +1,7 @@
 extends Node
 
 static func is_web() -> bool:
+	#return true
 	return JavaScriptBridge.get_interface('window') != null
 
 func reload():
@@ -10,11 +11,11 @@ func _ready() -> void:
 	print("is_web=", is_web())
 	if not is_web():
 		process_mode = Node.PROCESS_MODE_DISABLED
-		%ClickStartAudioUI.hide()
+		%WebSplash.hide()
 	else:
-		%ClickStartAudioUI.show()
-		%Howto.hide()
-		%DebugLabel.hide()
+		%WebSplash.show()
+		%UI.hide()
+		#%DebugLabel.hide()
 	
 func _input(e: InputEvent):
 	#print("web input ", e)
@@ -23,5 +24,5 @@ func _input(e: InputEvent):
 	
 	
 func _on_enable_audio_gesture_pressed() -> void:
-	%ClickStartAudioUI.hide()
-	%Howto.show()
+	%WebSplash.hide()
+	%UI.show()
