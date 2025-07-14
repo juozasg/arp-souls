@@ -32,10 +32,6 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="arp-souls"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/repl/plugin.cfg")
-
 [input]
 
 reload={
