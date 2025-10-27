@@ -15,6 +15,11 @@ if len(sys.argv) > 1:
 
 while True:
     flat_or_sharp = random.choice([flat_chords, sharp_chords])
-    random_chord = random.choice(chords + flat_or_sharp)
-    print(' ' + random_chord)
-    sleep(sleep_time)
+    all_chords = chords + flat_or_sharp
+    # choose 4 chords randomly
+    random_chords = random.sample(all_chords, 4)
+    print(' '.join(random_chords))
+
+    # sleep until any key is pressed
+    input("")
+    # sleep(sleep_time)
