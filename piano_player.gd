@@ -16,7 +16,7 @@ func _ready():
 
 
 func note_event(event: InputEventMIDI):
-	var note = event.pitch
+	var note = event.pitch - 12
 	var velocity = event.velocity
 	var message = event.message
 	

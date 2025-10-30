@@ -1,13 +1,31 @@
 extends Node
 
+class_name MidiLogic
+
+enum ChordType {MAJOR, MINOR}
+
+class Chord:
+	var root_semitone: int = 0
+	var chord_type: ChordType = ChordType.MAJOR
+	
+	func _init(r: int, ct: ChordType = ChordType.MAJOR):
+		root_semitone = r
+		chord_type = ct
+		
+
+enum GameState {OUTPUT_QUESTION, INPUT_ANSWER, QUESTION_COMPLETED}
+
 #var chord_pool = [5, 9, 10, 0] # F, A, A#, C
 #var chord_pool = [5, 7] # F, G
 var chord_pool = [4, 5, 6, 7] # E, F, F#, G
-var current_chord = 5
-var next_chord = 7
+var current_chord = Chord.new(5)
+var next_chord = Chord.new(7)
+var gamestate: GameState = GameState.QUESTION_COMPLETED
+
+
 
 func _ready():
-	#OS.open_midi_inputs()
+	OS.open_midi_inputs()
 	print("MIDI OPEN", OS.get_connected_midi_inputs())
 
 
@@ -21,6 +39,8 @@ func _input(e):
 		
 	if midi.message == MIDI_MESSAGE_NOTE_ON:
 		var note = midi.pitch % 12
+		if(note == current_chord.root_semitone):
+			print("you got it!")
 		#if note == last_note0 && note == last_note1:
 			#%ScoreLogic.bad_note()
 			##%NoteHints/Hint1/Label.text
